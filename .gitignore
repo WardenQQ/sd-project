@@ -1,0 +1,4 @@
+*.o
+
+#Name of the executable
+sd-project
