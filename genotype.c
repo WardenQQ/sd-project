@@ -2,6 +2,20 @@
 
 int rand();
 
+int compare_genotype(const void *genotype1, const void *genotype2)
+{
+    const genotype_t *g1 = genotype1;
+    const genotype_t *g2 = genotype2;
+
+    if (g1->fitness < g2->fitness) {
+        return 1;
+    } else if (g1->fitness > g2->fitness) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
 void random_genotype(genotype_t *out)
 {
     int i;
@@ -43,9 +57,8 @@ void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2)
 void mutate(genotype_t *in_out, int probability)
 {
     int p, i;
-    genotype_t result;
 
-    for (i = 0; i < MAX_GENES; i++) {
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
         p = rand() % MAX_PROBABILITY;
 
         if (p < probability) {
