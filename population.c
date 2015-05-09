@@ -2,6 +2,26 @@
 
 #include <stdlib.h>
 
+void genetic_algorithm(int nb_iterations, int nb_children)
+{
+    int i, j;
+    population_t pop;
+    genotype_t parent1, parent2, child;
+
+    init_population(&pop);
+
+    for (i = 0; i < nb_iterations; i++) {
+        for (j = 0; j < nb_children; j++) {
+            tournament_select(&parent1, &parent2, &pop, 5);
+            crossover(&child, &parent1, &parent2);
+            mutate(&child, 10);
+            evaluate(&child);
+            add_to_population(&pop, &child);
+            reduce_population(&pop);
+        }
+    }
+}
+
 void init_population(population_t *out)
 {
     int i;

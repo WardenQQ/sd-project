@@ -10,6 +10,8 @@ typedef struct {
     int size;
 } population_t;
 
+void genetic_algorithm(int nb_iterations, int nb_children);
+
 void init_population(population_t *out);
 
 void add_to_population(population_t *pop, genotype_t *genotype);
