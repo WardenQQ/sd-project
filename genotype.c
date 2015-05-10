@@ -30,11 +30,11 @@ void evaluate(genotype_t *genotype, map_t *map)
 {
     int i, map_type, goal_val;
     genotype->fitness = 0;
-    coord_t pos = map->start;
+    int pos = map->start_pos;
 
     for (i = 0; i < GENOTYPE_SIZE; i++) {
         pos = move(map, pos, genotype->genes[i].direction);
-        map_type = map->tab[pos.y][pos.x];
+        map_type = map->tab[pos];
         if (map_type > GOAL) {
             goal_val = (int) pow(2, (map_type - GOAL));
             /* A goal is counted only once. */
@@ -47,7 +47,7 @@ void evaluate(genotype_t *genotype, map_t *map)
 
     /* If all goals have not been reached */
     if (i == GENOTYPE_SIZE)
-        genotype->fitness += sqrt( pow((pos.x - map->start.x),2) + pow((pos.y - map->start.y), 2) );
+        genotype->fitness += sqrt( pow((pos%LENGTH - map->start_pos%LENGTH),2) + pow((pos/LENGTH - map->start_pos/LENGTH), 2) );
     else
         genotype->fitness += GENOTYPE_SIZE - i;
 

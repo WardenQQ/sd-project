@@ -18,8 +18,8 @@ typedef struct {
 } coord_t;
 
 typedef struct {
-    int tab[HEIGHT][LENGTH];
-    coord_t start;
+    int tab[HEIGHT*LENGTH];
+    int start_pos;
     int max_score;
 } map_t;
 
@@ -27,4 +27,4 @@ void init_map(map_t *out, int nbr_of_block, int nbr_of_goals);
 
 void print_map(map_t *out);
 
-coord_t move(map_t *map, coord_t pos, int direction);
+int move(map_t *map, int pos, int direction);
