@@ -7,7 +7,13 @@
 
 int main()
 {
+	/*
     genetic_algorithm(MAX_ITERATION, MAX_CHILDREN);
+    */
+    
+    map_t map;
+    init_map(&map, 20, 5);
+    print_map(&map);
 
     return 0;
 }

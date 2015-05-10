@@ -15,7 +15,7 @@ void genetic_algorithm(int nb_iterations, int nb_children)
             tournament_select(&parent1, &parent2, &pop, 5);
             crossover(&child, &parent1, &parent2);
             mutate(&child, 10);
-            evaluate(&child);
+            evaluate(&child, NULL);
             add_to_population(&pop, &child);
         }
 
@@ -30,7 +30,7 @@ void init_population(population_t *out)
     out->size = REDUCED_POPULATION_SIZE;
     for (i = 0; i < REDUCED_POPULATION_SIZE; i++) {
         random_genotype(&(out->genotypes[i]));
-        evaluate(&(out->genotypes[i]));
+        evaluate(&(out->genotypes[i]), NULL);
     }
 
     qsort(out->genotypes, REDUCED_POPULATION_SIZE, sizeof(*(out->genotypes)), compare_genotype);
