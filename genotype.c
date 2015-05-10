@@ -1,4 +1,5 @@
 #include "genotype.h"
+#include <math.h>
 
 int rand();
 
@@ -25,14 +26,36 @@ void random_genotype(genotype_t *out)
     }
 }
 
-void evaluate(genotype_t *genotype)
+void evaluate(genotype_t *genotype, map_t *map)
 {
-    int i;
-
+    int i, map_type, goal_val;
     genotype->fitness = 0;
+    coord_t pos = map->start;
+
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
+        pos = move(map, pos, genotype->genes[i].direction);
+        map_type = map->tab[pos.y][pos.x];
+        if (map_type > GOAL) {
+            goal_val = (int) pow(2, (map_type - GOAL));
+            /* A goal is counted only once. */
+            genotype->fitness += goal_val - ((int)genotype->fitness & goal_val);
+            if (genotype->fitness == map->max_score)
+                break;
+        }
+    }
+    genotype->fitness *= GENOTYPE_SIZE;
+
+    /* If all goals have not been reached */
+    if (i == GENOTYPE_SIZE)
+        genotype->fitness += sqrt( pow((pos.x - map->start.x),2) + pow((pos.y - map->start.y), 2) );
+    else
+        genotype->fitness += GENOTYPE_SIZE - i;
+
+    /*
     for (i = 0; i < GENOTYPE_SIZE; i++) {
         genotype->fitness += genotype->genes[i].step;
     }
+    */
 }
 
 void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2)
