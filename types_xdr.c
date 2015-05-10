@@ -3,19 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include "map.h"
-#include "procedures.h"
-
-bool_t xdr_coord_t (XDR *xdrs, coord_t *objp)
-{
-	register int32_t *buf;
-
-	 if (!xdr_int (xdrs, &objp->x))
-		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->y))
-		 return FALSE;
-	return TRUE;
-}
+#include "types_xdr.h"
 
 bool_t xdr_map_t (XDR *xdrs, map_t *objp)
 {
@@ -24,55 +12,57 @@ bool_t xdr_map_t (XDR *xdrs, map_t *objp)
 	int i;
 
 	if (xdrs->x_op == XDR_ENCODE) {
-		buf = XDR_INLINE (xdrs, ( HEIGHT * LENGTH ) * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, (2 +  HEIGHT*LENGTH )* BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT * LENGTH,
+			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
 				sizeof (int), (xdrproc_t) xdr_int))
 				 return FALSE;
-
+			 if (!xdr_int (xdrs, &objp->start_pos))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->max_score))
+				 return FALSE;
 		} else {
-		{
-			register int *genp;
+			{
+				register int *genp;
 
-			for (i = 0, genp = objp->tab;
-				i < HEIGHT * LENGTH; ++i) {
-				IXDR_PUT_LONG(buf, *genp++);
+				for (i = 0, genp = objp->tab;
+					i < HEIGHT*LENGTH; ++i) {
+					IXDR_PUT_LONG(buf, *genp++);
+				}
 			}
+			IXDR_PUT_LONG(buf, objp->start_pos);
+			IXDR_PUT_LONG(buf, objp->max_score);
 		}
-		}
-		 if (!xdr_coord_t (xdrs, &objp->start))
-			 return FALSE;
-		 if (!xdr_int (xdrs, &objp->max_score))
-			 return FALSE;
 		return TRUE;
 	} else if (xdrs->x_op == XDR_DECODE) {
-		buf = XDR_INLINE (xdrs, ( HEIGHT * LENGTH ) * BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, (2 +  HEIGHT*LENGTH )* BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT * LENGTH,
+			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
 				sizeof (int), (xdrproc_t) xdr_int))
 				 return FALSE;
-
+			 if (!xdr_int (xdrs, &objp->start_pos))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->max_score))
+				 return FALSE;
 		} else {
-		{
-			register int *genp;
+			{
+				register int *genp;
 
-			for (i = 0, genp = objp->tab;
-				i < HEIGHT * LENGTH; ++i) {
-				*genp++ = IXDR_GET_LONG(buf);
+				for (i = 0, genp = objp->tab;
+					i < HEIGHT*LENGTH; ++i) {
+					*genp++ = IXDR_GET_LONG(buf);
+				}
 			}
+			objp->start_pos = IXDR_GET_LONG(buf);
+			objp->max_score = IXDR_GET_LONG(buf);
 		}
-		}
-		 if (!xdr_coord_t (xdrs, &objp->start))
-			 return FALSE;
-		 if (!xdr_int (xdrs, &objp->max_score))
-			 return FALSE;
 	 return TRUE;
 	}
 
-	 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT * LENGTH,
+	 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
 		sizeof (int), (xdrproc_t) xdr_int))
 		 return FALSE;
-	 if (!xdr_coord_t (xdrs, &objp->start))
+	 if (!xdr_int (xdrs, &objp->start_pos))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->max_score))
 		 return FALSE;

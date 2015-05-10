@@ -6,12 +6,12 @@
 
 #define PROGNUM 0x2000abcd
 
-#define PROC_INIT_SERVER 0
-#define PROC_GIVE_SERVER_INFO 1
-#define PROC_ANNOUNCE_SELF 2
-#define PROC_ADD_SERVER 3
-#define PROC_GET_MAP 4
-#define PROC_SET_MAP 5
+#define PROC_INIT_SERVER 1
+#define PROC_GIVE_SERVER_INFO 2
+#define PROC_ANNOUNCE_SELF 3
+#define PROC_ADD_SERVER 4
+#define PROC_GET_MAP 5
+#define PROC_SET_MAP 6
 
 #define SERVER_LIST_MAX 16
 

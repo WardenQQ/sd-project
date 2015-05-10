@@ -23,14 +23,16 @@ server_info_t * give_server_info(void * none)
 int * announce_self(int *id)
 {
     static int ret = 0;
+    static server_info_t test;
 
     int i;
 
-    callrpc("localhost", PROGNUM, *id, PROC_GET_SERVER_INFO,
-            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_server_info_t, (char *)&info);
+    callrpc("localhost", PROGNUM, *id, PROC_GIVE_SERVER_INFO,
+            (xdrproc_t)xdr_void, &ret, (xdrproc_t)xdr_server_info_t, (char *)&info);
+    
     add_server(id);
     for (i = 0; i < info.size; i++) {
-        callrpc("localhost", PROGNUM, i, PROC_ADD_SERVER,
+        callrpc("localhost", PROGNUM, info.id[i], PROC_ADD_SERVER,
                 (xdrproc_t)xdr_int, (char *)&version, (xdrproc_t)xdr_int, (char *)&ret);
     }
 
@@ -57,6 +59,8 @@ map_t * get_map(void *id)
 int * set_map(map_t * map)
 {
     static int ret = 0;
+
+    info.map = *map;
 
     return &ret;
 }
