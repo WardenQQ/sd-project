@@ -17,8 +17,9 @@ void genetic_algorithm(int nb_iterations, int nb_children)
             mutate(&child, 10);
             evaluate(&child);
             add_to_population(&pop, &child);
-            reduce_population(&pop);
         }
+
+        reduce_population(&pop);
     }
 }
 
