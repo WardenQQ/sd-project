@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -lm -g -Wall -ansi
+CFLAGS = -g -Wall -ansi
+LDFLAGS = -lm
 
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
@@ -9,7 +10,7 @@ EXEC = sd-project
 	$(CC) -o $@  -c $< $(CFLAGS) 
 
 $(EXEC): $(OBJS)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm $(OBJS) $(EXEC)
