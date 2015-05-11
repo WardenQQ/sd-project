@@ -1,5 +1,9 @@
 #include "gene.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int rand();
 
 gene_t random_gene()
@@ -11,3 +15,7 @@ gene_t random_gene()
 
     return g;
 }
+
+#ifdef __cplusplus
+}
+#endif

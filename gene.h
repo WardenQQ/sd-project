@@ -1,7 +1,12 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MIN_STEP 0
 #define MAX_STEP 16
+
 
 enum {
     NORTH = 0,
@@ -20,3 +25,7 @@ typedef struct {
 } gene_t;
 
 gene_t random_gene();
+
+#ifdef __cplusplus
+}
+#endif

@@ -90,8 +90,24 @@ void server(int vers)
                 PROC_SET_MAP, set_map,
                 (xdrproc_t)xdr_map_t, (xdrproc_t)xdr_int) != 0) 
     {
-	    fprintf(stderr,"Echec de l'enregistrement pour PROC_SET_MAP\n");
-	    exit(1);
+        fprintf(stderr,"Echec de l'enregistrement pour PROC_SET_MAP\n");
+        exit(1);
+    }
+
+    if ( registerrpc(PROGNUM, vers,
+                PROC_SEND_MIGRANTS, send_migrants,
+                (xdrproc_t)xdr_migrants_t, (xdrproc_t)xdr_int) != 0) 
+    {
+        fprintf(stderr,"Echec de l'enregistrement pour PROC_SEND_MIGRANTS\n");
+        exit(1);
+    }
+
+    if ( registerrpc(PROGNUM, vers,
+                PROC_RECEIVE_MIGRANTS, receive_migrants,
+                (xdrproc_t)xdr_void, (xdrproc_t)xdr_migrants_t) != 0) 
+    {
+        fprintf(stderr,"Echec de l'enregistrement pour PROC_RECEIVE_MIGRANTS\n");
+        exit(1);
     }
 
     svc_run();
@@ -112,7 +128,7 @@ void client(int vers, int contact)
     }
 
     if (contact < 0) {
-        init_map(&map, 20, 5);
+        random_map(&map, 20, 5);
 
         stat = callrpc("localhost", PROGNUM, vers, PROC_SET_MAP,
                 (xdrproc_t)xdr_map_t, (char *)&map,
@@ -127,9 +143,10 @@ void client(int vers, int contact)
         stat = callrpc("localhost", PROGNUM, vers, PROC_GET_MAP,
                 (xdrproc_t)xdr_void, (char *)&vers,
                 (xdrproc_t)xdr_map_t, (char *)&map);
-    }
+    }   
 
-
+    genetic_algorithm(100, MAX_CHILDREN, &map, vers);
+/*
     int i, new_pos, map_type;
     genotype_t adn, adn2;
     random_genotype(&adn);
@@ -152,6 +169,6 @@ void client(int vers, int contact)
     evaluate(&adn2, &map);
     printf("\nThe fitness of adn1 is : %g\n", adn.fitness);
     printf("The fitness of adn2 is : %g\n", adn2.fitness);
-
+*/
     exit(0);
 }

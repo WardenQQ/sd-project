@@ -4,14 +4,19 @@
 
 server_info_t info;
 int version;
+migrants_t pop;
 
 int * init_server(int * vers)
 {
     static int ret = 0;
+    int i;
 
     info.size = 0;
     version = *vers;
 
+    for (i = 0; i < MIGRATION_SIZE; i++) {
+        pop.pop[i].fitness = -1;
+    }
     return &ret;
 }
 
@@ -63,4 +68,18 @@ int * set_map(map_t * map)
     info.map = *map;
 
     return &ret;
+}
+
+int * send_migrants(migrants_t * m)
+{
+    static int ret = 0;
+
+    pop = *m;
+
+    return &ret;
+}
+
+migrants_t * receive_migrants(void * none)
+{
+    return &(pop);
 }

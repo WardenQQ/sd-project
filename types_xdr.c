@@ -132,3 +132,31 @@ bool_t xdr_server_info_t (XDR *xdrs, server_info_t *objp)
 		 return FALSE;
 	return TRUE;
 }
+
+bool_t xdr_migrants_t (XDR *xdrs, migrants_t *objp)
+{
+	 if (!xdr_vector (xdrs, (char *)objp->pop, MIGRATION_SIZE,
+		sizeof (genotype_t), (xdrproc_t) xdr_genotype_t))
+		 return FALSE;
+	return TRUE;
+}
+
+
+bool_t xdr_genotype_t (XDR *xdrs, genotype_t *objp)
+{
+	 if (!xdr_vector (xdrs, (char *)objp->genes, GENOTYPE_SIZE,
+		sizeof (gene_t), (xdrproc_t) xdr_gene_t))
+		 return FALSE;
+	 if (!xdr_double (xdrs, &objp->fitness))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t xdr_gene_t (XDR *xdrs, gene_t *objp)
+{
+	 if (!xdr_int (xdrs, &objp->step))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->direction))
+		 return FALSE;
+	return TRUE;
+}

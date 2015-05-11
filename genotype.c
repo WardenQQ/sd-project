@@ -28,6 +28,7 @@ void random_genotype(genotype_t *out)
 
 void evaluate(genotype_t *genotype, map_t *map)
 {
+    /*
     int i, map_type, goal_val;
     genotype->fitness = 0;
     int pos = map->start_pos;
@@ -37,7 +38,7 @@ void evaluate(genotype_t *genotype, map_t *map)
         map_type = map->tab[pos];
         if (map_type > GOAL) {
             goal_val = (int) pow(2, (map_type - GOAL));
-            /* A goal is counted only once. */
+            * A goal is counted only once. *
             genotype->fitness += goal_val - ((int)genotype->fitness & goal_val);
             if (genotype->fitness == map->max_score)
                 break;
@@ -45,11 +46,12 @@ void evaluate(genotype_t *genotype, map_t *map)
     }
     genotype->fitness *= GENOTYPE_SIZE;
 
-    /* If all goals have not been reached */
+    * If all goals have not been reached *
     if (i == GENOTYPE_SIZE)
         genotype->fitness += sqrt( pow((pos%LENGTH - map->start_pos%LENGTH),2) + pow((pos/LENGTH - map->start_pos/LENGTH), 2) );
     else
         genotype->fitness += GENOTYPE_SIZE - i;
+    */
 
 }
 
