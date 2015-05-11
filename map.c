@@ -20,7 +20,6 @@ void init_map(map_t *out, int nbr_of_blocks, int nbr_of_goals)
 	for (i = 0; i < HEIGHT*LENGTH; i++) {
 		dice = rand() % (HEIGHT*LENGTH - i );
 		if (dice < nbr_of_init) {
-			printf("start_pos = %d\n", i);
 			out->tab[i] = START;
 			out->start_pos = i;
 			nbr_of_init--;
@@ -59,37 +58,57 @@ int move(map_t *map, int pos, int direction)
 	 * the map doesn't change the position
 	 */
 
-	int res = pos, wrong_move = 0;
+	int res = pos, out_of_border = 0;
 	if (NORTH_EAST <= direction && direction <= SOUTH_EAST) {
 		if (pos%LENGTH == LENGTH-1)
-			wrong_move = 1;
+			out_of_border = 1;
 		else
 			res++;
 	}
 
 	if (SOUTH_EAST <= direction && direction <= SOUTH_WEST ) {
 		if (pos/LENGTH == HEIGHT-1)
-			wrong_move = 1;
+			out_of_border = 1;
 		else
 			res+=LENGTH;
 	}
 
 	if (SOUTH_WEST <= direction && direction <= NORTH_WEST ) {
 		if (pos%LENGTH == 0)
-			wrong_move = 1;
+			out_of_border = 1;
 		else
 			res--;
 	}
 
 	if (direction == NORTH_WEST || direction == NORTH || direction == NORTH_EAST) {
 		if (pos/LENGTH == 0)
-			wrong_move = 1;
+			out_of_border = 1;
 		else
 			res-=LENGTH;
 	}
 
-	if (wrong_move == 1)
+	if (out_of_border == 1 || map->tab[res] == BLOCK)
 		res = pos;
 
 	return res;
 }
+
+/*
+void print_walk(map_t map, genotype_t adn)
+{
+	int i, new_pos, map_type;
+	new_pos = map.start_pos;
+	print_map(&map);
+
+	for (i = 0; i < GENOTYPE_SIZE; i++)
+	{
+		printf("Press <ENTER> to continue...\n");
+	    getchar();
+	    new_pos = move(&map, new_pos, adn.genes[i].direction);
+	    map_type = map.tab[new_pos];
+	    map.tab[new_pos] = 7;
+	    print_map(&map);
+	    map.tab[new_pos] = map_type;
+	}
+}
+*/

@@ -23,12 +23,11 @@ server_info_t * give_server_info(void * none)
 int * announce_self(int *id)
 {
     static int ret = 0;
-    static server_info_t test;
 
     int i;
 
     callrpc("localhost", PROGNUM, *id, PROC_GIVE_SERVER_INFO,
-            (xdrproc_t)xdr_void, &ret, (xdrproc_t)xdr_server_info_t, (char *)&info);
+            (xdrproc_t)xdr_void, (char *)&ret, (xdrproc_t)xdr_server_info_t, (char *)&info);
     
     add_server(id);
     for (i = 0; i < info.size; i++) {
@@ -46,6 +45,7 @@ int * add_server(int *id)
     if (info.size < SERVER_LIST_MAX) {
         info.id[info.size] = *id;
         info.size++;
+        printf("<SERVER> Adding of a new instance: %d\n", *id);
     }
 
     return &ret;

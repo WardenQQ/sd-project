@@ -51,11 +51,6 @@ void evaluate(genotype_t *genotype, map_t *map)
     else
         genotype->fitness += GENOTYPE_SIZE - i;
 
-    /*
-    for (i = 0; i < GENOTYPE_SIZE; i++) {
-        genotype->fitness += genotype->genes[i].step;
-    }
-    */
 }
 
 void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2)
