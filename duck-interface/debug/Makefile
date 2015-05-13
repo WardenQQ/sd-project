@@ -51,11 +51,15 @@ OBJECTS_DIR   = ./
 SOURCES       = ../main.cpp \
 		../mainwindow.cpp \
 		../../map.c \
-		../../gene.c moc_mainwindow.cpp
+		../../gene.c \
+		../../genotype.c \
+		../../population.c moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		map.o \
 		gene.o \
+		genotype.o \
+		population.o \
 		moc_mainwindow.o
 DIST          = /home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/features/spec_pre.prf \
 		/home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/common/shell-unix.conf \
@@ -176,10 +180,14 @@ DIST          = /home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/features/spec_pre.prf \
 		/home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/features/lex.prf \
 		../../duck-interface.pro ../mainwindow.h \
 		../../map.h \
-		../../gene.h ../main.cpp \
+		../../gene.h \
+		../../genotype.h \
+		../../population.h ../main.cpp \
 		../mainwindow.cpp \
 		../../map.c \
-		../../gene.c
+		../../gene.c \
+		../../genotype.c \
+		../../population.c
 QMAKE_TARGET  = duck-interface
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = duck-interface
@@ -467,8 +475,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainwindow.h ../../map.h ../../gene.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../../map.c ../../gene.c $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainwindow.h ../../map.h ../../gene.h ../../genotype.h ../../population.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../../map.c ../../gene.c ../../genotype.c ../../population.c $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
 
 
@@ -804,6 +812,9 @@ moc_mainwindow.cpp: /home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/QtGui \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		../../map.h \
+		../../gene.h \
+		../../genotype.h \
 		../mainwindow.h
 	/home/abotsi/Qt5.4.1/5.4/gcc/bin/moc $(DEFINES) -I/home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/linux-g++ -I/home/abotsi/Documents/S6/SD/projet/sd-project/duck-interface -I/home/abotsi/Qt5.4.1/5.4/gcc/include -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtCore -I. ../mainwindow.h -o moc_mainwindow.cpp
 
@@ -1135,6 +1146,9 @@ main.o: ../main.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		../../map.h \
+		../../gene.h \
+		../../genotype.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QApplication \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qapplication.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdesktopwidget.h
@@ -1450,6 +1464,9 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		../../map.h \
+		../../gene.h \
+		../../genotype.h \
 		ui_mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtCore/QVariant \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QAction \
@@ -1476,8 +1493,6 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QMenuBar \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qmenubar.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qmenu.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QStatusBar \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstatusbar.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QToolBar \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtoolbar.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget
@@ -1489,6 +1504,19 @@ map.o: ../../map.c ../../map.h \
 
 gene.o: ../../gene.c ../../gene.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o gene.o ../../gene.c
+
+genotype.o: ../../genotype.c ../../genotype.h \
+		../../gene.h \
+		../../map.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o genotype.o ../../genotype.c
+
+population.o: ../../population.c ../../population.h \
+		../../genotype.h \
+		../../gene.h \
+		../../map.h \
+		../../procedures.h \
+		../../types_xdr.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o population.o ../../population.c
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

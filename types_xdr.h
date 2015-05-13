@@ -5,8 +5,17 @@
 #include "map.h"
 #include "procedures.h"
 
-bool_t xdr_map_t (XDR *xdrs, map_t *objp);
-bool_t xdr_server_info_t (XDR *xdrs, server_info_t *objp);
-bool_t xdr_migrants_t (XDR *xdrs, migrants_t *objp);
-bool_t xdr_genotype_t (XDR *xdrs, genotype_t *objp);
-bool_t xdr_gene_t (XDR *xdrs, gene_t *objp);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern  bool_t xdr_map_object_t (XDR *, map_object_t*);
+extern  bool_t xdr_map_t (XDR *, map_t*);
+extern  bool_t xdr_server_info_t (XDR *, server_info_t*);
+extern  bool_t xdr_migrants_t (XDR *, migrants_t*);
+extern  bool_t xdr_genotype_t (XDR *, genotype_t*);
+extern  bool_t xdr_gene_t (XDR *, gene_t*);
+
+#ifdef __cplusplus
+}
+#endif

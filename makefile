@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -ansi
+CFLAGS = -g -Wall -std=gnu89
 LDFLAGS = -lm
 
 SRCS = $(wildcard *.c)

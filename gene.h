@@ -4,8 +4,8 @@
 extern "C" {
 #endif
 
-#define MIN_STEP 0
-#define MAX_STEP 16
+#define MIN_STEP 32
+#define MAX_STEP 64
 
 
 enum {

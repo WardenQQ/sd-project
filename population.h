@@ -1,6 +1,10 @@
 #pragma once
 
-#include "genotype.h"
+#include "map.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define MAX_POPULATION_SIZE 200
 #define REDUCED_POPULATION_SIZE 100
@@ -11,7 +15,7 @@ typedef struct {
     int size;
 } population_t;
 
-void genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers);
+genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers);
 
 void init_population(population_t *out, map_t *map);
 
@@ -24,3 +28,8 @@ void tournament_select(genotype_t *parent1, genotype_t *parent2, population_t *p
 void emigrate(population_t *pop, int vers);
 
 void immigrate(population_t *out, int vers);
+
+
+#ifdef __cplusplus
+}
+#endif

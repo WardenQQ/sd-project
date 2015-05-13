@@ -9,7 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setGeometry(0, 0, LENGTH, HEIGHT);
 
-    random_map(&(this->map), 4, 1);
+    random_map(&(this->map), 4, 2);
+
+    best = genetic_algorithm(500, 50, &map, 0);
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +22,7 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     this->displayMap();
+    this->displayPath();
 }
 
 void MainWindow::displayMap()
@@ -33,24 +36,43 @@ void MainWindow::displayMap()
     painter.setBrush(QBrush(Qt::darkBlue, Qt::SolidPattern));
 
     int r, x, y;
-    for (int i = 0; i < map.nbr_of_blocks; i++) {
+    for (int i = 0; i < map.nb_blocks; i++) {
         r = map.blocks[i].radius;
         x = map.blocks[i].x - r;
         y = map.blocks[i].y - r;
-        painter.drawEllipse(x, y, r, r);
+        painter.drawEllipse(x, y, r*2, r*2);
     }
 
     painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
-    for (int i = 0; i < map.nbr_of_goals; i++) {
+    for (int i = 0; i < map.nb_goals; i++) {
         r = map.goals[i].radius;
         x = map.goals[i].x - r;
         y = map.goals[i].y - r;
-        painter.drawEllipse(x, y, r, r);
+        painter.drawEllipse(x, y, r*2, r*2);
     }
 
     painter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
     r = map.start_pos.radius;
     x = map.start_pos.x - r;
     y = map.start_pos.y - r;
-    painter.drawEllipse(x, y, r, r);
+    painter.drawEllipse(x, y, r*2, r*2);
+}
+
+
+void MainWindow::displayPath()
+{
+    QPainter painter(this);
+
+    int i;
+    map_object_t pos = map.start_pos;
+
+    QPainterPath path;
+    path.moveTo(pos.x, pos.y);
+
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
+        evaluate_gene(best.genes[i], &pos, &map);
+        path.lineTo(pos.x, pos.y);
+    }
+
+    painter.drawPath(path);
 }

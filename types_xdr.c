@@ -5,71 +5,84 @@
 
 #include "types_xdr.h"
 
-bool_t xdr_map_t (XDR *xdrs, map_t *objp)
+bool_t
+xdr_map_object_t (XDR *xdrs, map_object_t *objp)
 {
 	register int32_t *buf;
 
-	int i;
 
 	if (xdrs->x_op == XDR_ENCODE) {
-		buf = XDR_INLINE (xdrs, (2 +  HEIGHT*LENGTH )* BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, 4 * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
-				sizeof (int), (xdrproc_t) xdr_int))
+			 if (!xdr_int (xdrs, &objp->x))
 				 return FALSE;
-			 if (!xdr_int (xdrs, &objp->start_pos))
+			 if (!xdr_int (xdrs, &objp->y))
 				 return FALSE;
-			 if (!xdr_int (xdrs, &objp->max_score))
+			 if (!xdr_int (xdrs, &objp->radius))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->type))
 				 return FALSE;
 		} else {
-			{
-				register int *genp;
-
-				for (i = 0, genp = objp->tab;
-					i < HEIGHT*LENGTH; ++i) {
-					IXDR_PUT_LONG(buf, *genp++);
-				}
-			}
-			IXDR_PUT_LONG(buf, objp->start_pos);
-			IXDR_PUT_LONG(buf, objp->max_score);
+			IXDR_PUT_LONG(buf, objp->x);
+			IXDR_PUT_LONG(buf, objp->y);
+			IXDR_PUT_LONG(buf, objp->radius);
+			IXDR_PUT_LONG(buf, objp->type);
 		}
 		return TRUE;
 	} else if (xdrs->x_op == XDR_DECODE) {
-		buf = XDR_INLINE (xdrs, (2 +  HEIGHT*LENGTH )* BYTES_PER_XDR_UNIT);
+		buf = XDR_INLINE (xdrs, 4 * BYTES_PER_XDR_UNIT);
 		if (buf == NULL) {
-			 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
-				sizeof (int), (xdrproc_t) xdr_int))
+			 if (!xdr_int (xdrs, &objp->x))
 				 return FALSE;
-			 if (!xdr_int (xdrs, &objp->start_pos))
+			 if (!xdr_int (xdrs, &objp->y))
 				 return FALSE;
-			 if (!xdr_int (xdrs, &objp->max_score))
+			 if (!xdr_int (xdrs, &objp->radius))
+				 return FALSE;
+			 if (!xdr_int (xdrs, &objp->type))
 				 return FALSE;
 		} else {
-			{
-				register int *genp;
-
-				for (i = 0, genp = objp->tab;
-					i < HEIGHT*LENGTH; ++i) {
-					*genp++ = IXDR_GET_LONG(buf);
-				}
-			}
-			objp->start_pos = IXDR_GET_LONG(buf);
-			objp->max_score = IXDR_GET_LONG(buf);
+			objp->x = IXDR_GET_LONG(buf);
+			objp->y = IXDR_GET_LONG(buf);
+			objp->radius = IXDR_GET_LONG(buf);
+			objp->type = IXDR_GET_LONG(buf);
 		}
 	 return TRUE;
 	}
 
-	 if (!xdr_vector (xdrs, (char *)objp->tab, HEIGHT*LENGTH,
-		sizeof (int), (xdrproc_t) xdr_int))
+	 if (!xdr_int (xdrs, &objp->x))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->start_pos))
+	 if (!xdr_int (xdrs, &objp->y))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->max_score))
+	 if (!xdr_int (xdrs, &objp->radius))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->type))
 		 return FALSE;
 	return TRUE;
 }
 
-bool_t xdr_server_info_t (XDR *xdrs, server_info_t *objp)
+bool_t
+xdr_map_t (XDR *xdrs, map_t *objp)
+{
+	register int32_t *buf;
+
+	int i;
+	 if (!xdr_vector (xdrs, (char *)objp->blocks, MAX_BLOCKS_NBR,
+		sizeof (map_object_t), (xdrproc_t) xdr_map_object_t))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->nb_blocks))
+		 return FALSE;
+	 if (!xdr_vector (xdrs, (char *)objp->goals, MAX_GOALS_NBR,
+		sizeof (map_object_t), (xdrproc_t) xdr_map_object_t))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->nb_goals))
+		 return FALSE;
+	 if (!xdr_map_object_t (xdrs, &objp->start_pos))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_server_info_t (XDR *xdrs, server_info_t *objp)
 {
 	register int32_t *buf;
 
@@ -133,17 +146,24 @@ bool_t xdr_server_info_t (XDR *xdrs, server_info_t *objp)
 	return TRUE;
 }
 
-bool_t xdr_migrants_t (XDR *xdrs, migrants_t *objp)
+bool_t
+xdr_migrants_t (XDR *xdrs, migrants_t *objp)
 {
+	register int32_t *buf;
+
+	int i;
 	 if (!xdr_vector (xdrs, (char *)objp->pop, MIGRATION_SIZE,
 		sizeof (genotype_t), (xdrproc_t) xdr_genotype_t))
 		 return FALSE;
 	return TRUE;
 }
 
-
-bool_t xdr_genotype_t (XDR *xdrs, genotype_t *objp)
+bool_t
+xdr_genotype_t (XDR *xdrs, genotype_t *objp)
 {
+	register int32_t *buf;
+
+	int i;
 	 if (!xdr_vector (xdrs, (char *)objp->genes, GENOTYPE_SIZE,
 		sizeof (gene_t), (xdrproc_t) xdr_gene_t))
 		 return FALSE;
@@ -152,8 +172,11 @@ bool_t xdr_genotype_t (XDR *xdrs, genotype_t *objp)
 	return TRUE;
 }
 
-bool_t xdr_gene_t (XDR *xdrs, gene_t *objp)
+bool_t
+xdr_gene_t (XDR *xdrs, gene_t *objp)
 {
+	register int32_t *buf;
+
 	 if (!xdr_int (xdrs, &objp->step))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->direction))

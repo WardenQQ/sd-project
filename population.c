@@ -4,7 +4,12 @@
 
 #include <stdlib.h>
 
-void genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
 {
     int i, j;
     population_t pop;
@@ -14,7 +19,7 @@ void genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
 
     for (i = 0; i < nb_iterations; i++) {
         if (i % MIGRATION_FREQUENCY == 0)
-            emigrate(&pop, vers);
+//            emigrate(&pop, vers);
         for (j = 0; j < nb_children; j++) {
             tournament_select(&parent1, &parent2, &pop, 5);
             crossover(&child, &parent1, &parent2);
@@ -23,11 +28,12 @@ void genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
             add_to_population(&pop, &child);
         }
         if (i % MIGRATION_FREQUENCY == 0)
-            immigrate(&pop, vers);
+//            immigrate(&pop, vers);
 
         reduce_population(&pop);
     }
     printf("\nThe fitness of the best DNA is : %g\n", pop.genotypes[0].fitness);
+    return pop.genotypes[0];
 }
 
 void init_population(population_t *out, map_t *map)
@@ -75,46 +81,50 @@ void tournament_select(genotype_t *parent1, genotype_t *parent2, population_t *p
 
 void emigrate(population_t *pop, int vers)
 {
-    int i, err;
-    migrants_t m;
-    enum clnt_stat stat;
-    for (i = 0; i < MIGRATION_SIZE; i++)
-        m.pop[i] = pop->genotypes[i];
+//    int i, err;
+//    migrants_t m;
+//    enum clnt_stat stat;
+//    for (i = 0; i < MIGRATION_SIZE; i++)
+//        m.pop[i] = pop->genotypes[i];
     
-    if ( (stat = callrpc("localhost", PROGNUM, vers, PROC_SEND_MIGRANTS,
-            (xdrproc_t)xdr_migrants_t, (char *)&m,
-            (xdrproc_t)xdr_int, (char *)&err)) )
-    {
-        fprintf(stderr, "Echec de l'appel distant (");
-        clnt_perrno(stat);      fprintf(stderr, ")\n");
-    }
+//    if ( (stat = callrpc("localhost", PROGNUM, vers, PROC_SEND_MIGRANTS,
+//            (xdrproc_t)xdr_migrants_t, (char *)&m,
+//            (xdrproc_t)xdr_int, (char *)&err)) )
+//    {
+//        fprintf(stderr, "Echec de l'appel distant (");
+//        clnt_perrno(stat);      fprintf(stderr, ")\n");
+//    }
 }
 
 
 void immigrate(population_t *out, int vers)
 {
-    int i, dice;
-    migrants_t m;
-    server_info_t info;
-    enum clnt_stat stat;
+//    int i, dice;
+//    migrants_t m;
+//    server_info_t info;
+//    enum clnt_stat stat;
     
-    callrpc("localhost", PROGNUM, vers, PROC_GIVE_SERVER_INFO,
-            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_server_info_t, (char *)&info);
+//    callrpc("localhost", PROGNUM, vers, PROC_GIVE_SERVER_INFO,
+//            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_server_info_t, (char *)&info);
 
-    if (info.size != 0)
-    {
-        dice = rand() % info.size;
+//    if (info.size != 0)
+//    {
+//        dice = rand() % info.size;
 
-        if ( (stat = callrpc("localhost", PROGNUM, info.id[dice], PROC_RECEIVE_MIGRANTS,
-                (xdrproc_t)xdr_void, NULL,
-                (xdrproc_t)xdr_migrants_t, (char *)&m)) )
-        {
-            fprintf(stderr, "Echec de l'appel distant (");
-            clnt_perrno(stat);      fprintf(stderr, ")\n");
-        }
+//        if ( (stat = callrpc("localhost", PROGNUM, info.id[dice], PROC_RECEIVE_MIGRANTS,
+//                (xdrproc_t)xdr_void, NULL,
+//                (xdrproc_t)xdr_migrants_t, (char *)&m)) )
+//        {
+//            fprintf(stderr, "Echec de l'appel distant (");
+//            clnt_perrno(stat);      fprintf(stderr, ")\n");
+//        }
     
-        for (i = 0; i < MIGRATION_SIZE; i++)
-            add_to_population(out, &(m.pop[i]) );
-    }
+//        for (i = 0; i < MIGRATION_SIZE; i++)
+//            add_to_population(out, &(m.pop[i]) );
+//    }
 }
 
+
+#ifdef __cplusplus
+}
+#endif

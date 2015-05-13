@@ -19,121 +19,120 @@ void random_map(map_t *out, int nbr_of_blocks, int nbr_of_goals)
 	}
 
 	int i;
-	out->nbr_of_blocks = 0;
-	out->nbr_of_goals = 0;
+	out->nb_blocks = 0;
+	out->nb_goals = 0;
 
 	for (i = 0; i < nbr_of_blocks; i++) {
-		out->blocks[i].radius = rand() % MAX_BLOCK_RADIUS;
+		out->blocks[i].radius = rand() % MAX_RADIUS;
 		out->blocks[i].x = out->blocks[i].radius + rand() % (LENGTH - 2 * out->blocks[i].radius);
 		out->blocks[i].y = out->blocks[i].radius + rand() % (HEIGHT - 2 * out->blocks[i].radius);
-		out->nbr_of_blocks++;
+		out->nb_blocks++;
 	}
 
 	for (i = 0; i < nbr_of_goals; i++) {
 		do {
-			out->goals[i].radius = MIN_GOAL_RADIUS + nbr_of_goals-i;
+			out->goals[i].radius = MIN_RADIUS + nbr_of_goals-i;
 			out->goals[i].x = out->goals[i].radius + rand() % (LENGTH - 2 * out->goals[i].radius);
 			out->goals[i].y = out->goals[i].radius + rand() % (HEIGHT - 2 * out->goals[i].radius);
 		} while (is_not_enough_space(out, out->goals[i]));
-		out->nbr_of_goals++;
+		out->nb_goals++;
 	}
 
 	do {
-        out->start_pos.radius = 10;
+        out->start_pos.radius = MIN_RADIUS;
 		out->start_pos.x = out->start_pos.radius + rand() % (LENGTH - 2 * out->start_pos.radius);
 		out->start_pos.y = out->start_pos.radius + rand() % (HEIGHT - 2 * out->start_pos.radius);
-	} while (is_not_enough_space(out, out->goals[i]));
+	} while (is_not_enough_space(out, out->start_pos));
 }
 
-int is_not_enough_space(map_t *map, circle_t obj)
+int is_not_enough_space(map_t *map, map_object_t obj)
 {
 	int res = 0;
 	int i;
-	for (i=0; i<map->nbr_of_blocks; i++)
-		res = res | is_collision(map->blocks[i], obj);
-	for (i=0; i<map->nbr_of_goals; i++)
-		res = res | is_collision(map->goals[i], obj);
+	for (i=0; i<map->nb_blocks; i++)
+		res = res | collides_with(map->blocks[i], obj);
+	for (i=0; i<map->nb_goals; i++)
+		res = res | collides_with(map->goals[i], obj);
 	return res;
 }
 
-int is_collision(circle_t obj1, circle_t obj2)
+int collides_with(map_object_t obj1, map_object_t obj2)
 {
-	if (compute_distance(obj1, obj2) < obj1.radius + obj2.radius)
-		return 1;
-	else
-		return 0;
+	return compute_distance(obj1, obj2) < obj1.radius + obj2.radius;
 }
 
-int compute_distance(circle_t obj1, circle_t obj2)
+int compute_distance(map_object_t obj1, map_object_t obj2)
 {
 	return sqrt( pow((obj1.x - obj2.x),2) + pow((obj1.y - obj2.y), 2) );
 }
 
-circle_t move(map_t *map, circle_t pos, gene_t gene)
+map_object_t compute_position(map_object_t pos, int dir)
 {
-	circle_t res = pos;
-	/*
-	circle_t res = pos;
+    map_object_t res = pos;
 
-	if (NORTH_EAST <= gene.direction && gene.direction <= SOUTH_EAST) {
-		if (pos%LENGTH == LENGTH-1)
-			out_of_border = 1;
-		else
-			res++;
-	}
+    if (NORTH_EAST <= dir && dir <= SOUTH_EAST)
+        res.x+=1;
 
-	if (SOUTH_EAST <= gene.direction && gene.direction <= SOUTH_WEST ) {
-		if (pos/LENGTH == HEIGHT-1)
-			out_of_border = 1;
-		else
-			res+=LENGTH;
-	}
+    if (SOUTH_EAST <= dir && dir <= SOUTH_WEST )
+        res.y+=1;
 
-	if (SOUTH_WEST <= gene.direction && gene.direction <= NORTH_WEST ) {
-		if (pos%LENGTH == 0)
-			out_of_border = 1;
-		else
-			res--;
-	}
+    if (SOUTH_WEST <= dir && dir <= NORTH_WEST )
+        res.x-=1;
 
-	if (gene.direction == NORTH_WEST || gene.direction == NORTH || gene.direction == NORTH_EAST) {
-		if (pos/LENGTH == 0)
-			out_of_border = 1;
-		else
-			res-=LENGTH;
-	}
+    if (dir == NORTH_WEST || dir == NORTH || dir == NORTH_EAST)
+        res.y-=1;
 
-	if (out_of_border == 1 || map->tab[res] == BLOCK)
-		res = pos;
-
-	*/
-	return res;
+    return res;
 }
 
-/*
-void print_map(map_t *out)
+int evaluate_gene(gene_t g, map_object_t *pos, map_t *map)
 {
+    map_object_t new_pos;
+    int fitness = 0, i, j;
 
+    for (i = 0; i < g.step; i++) {
+        new_pos = compute_position(*pos, g.direction);
+
+        if (!in_boundary(map, new_pos)) {
+            return fitness;
+        } 
+
+        /* We first iterate over obstacles */
+        for (j = 0; j < map->nb_blocks; j++) {
+            if (collides_with(new_pos, map->blocks[j])) {
+                return fitness;
+            }
+        }
+
+        /* then over objectives. */
+        for (j = 0;j < map->nb_goals; j++) {
+            if (collides_with(new_pos, map->goals[j])) {
+                fitness += 100;
+            }
+        }
+
+        *pos = new_pos;
+    }
+
+    return fitness;
 }
 
-void print_walk(map_t map, genotype_t adn)
+void evaluate(genotype_t *genotype, map_t *map)
 {
-	int i, new_pos, map_type;
-	new_pos = map.start_pos;
-	print_map(&map);
+    int i;
+    map_object_t pos = map->start_pos;
 
-	for (i = 0; i < GENOTYPE_SIZE; i++)
-	{
-		printf("Press <ENTER> to continue...\n");
-	    getchar();
-	    new_pos = move(&map, new_pos, adn.genes[i].direction);
-	    map_type = map.tab[new_pos];
-	    map.tab[new_pos] = 7;
-	    print_map(&map);
-	    map.tab[new_pos] = map_type;
-	}
+    genotype->fitness = 0;
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
+        genotype->fitness += evaluate_gene(genotype->genes[i], &pos, map);
+    }
 }
-*/
+
+int in_boundary(map_t * map, map_object_t pos)
+{
+    return pos.x >= 0 && pos.x < LENGTH && pos.y >= 0 && pos.y < HEIGHT;
+}
+
 
 #ifdef __cplusplus
 }

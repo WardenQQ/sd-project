@@ -4,6 +4,8 @@
 #include <QtGui>
 #include <QMainWindow>
 #include "../map.h"
+#include "../genotype.h"
+#include "../population.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +26,9 @@ protected:
 private:
     Ui::MainWindow *ui;
     map_t map;
+    genotype_t best;
     void displayMap();
+    void displayPath();
 };
 
 #endif // MAINWINDOW_H

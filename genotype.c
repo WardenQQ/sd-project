@@ -1,6 +1,11 @@
 #include "genotype.h"
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 int rand();
 
 int compare_genotype(const void *genotype1, const void *genotype2)
@@ -24,35 +29,6 @@ void random_genotype(genotype_t *out)
     for (i = 0; i < GENOTYPE_SIZE; i++) {
         out->genes[i] = random_gene();
     }
-}
-
-void evaluate(genotype_t *genotype, map_t *map)
-{
-    /*
-    int i, map_type, goal_val;
-    genotype->fitness = 0;
-    int pos = map->start_pos;
-
-    for (i = 0; i < GENOTYPE_SIZE; i++) {
-        pos = move(map, pos, genotype->genes[i].direction);
-        map_type = map->tab[pos];
-        if (map_type > GOAL) {
-            goal_val = (int) pow(2, (map_type - GOAL));
-            * A goal is counted only once. *
-            genotype->fitness += goal_val - ((int)genotype->fitness & goal_val);
-            if (genotype->fitness == map->max_score)
-                break;
-        }
-    }
-    genotype->fitness *= GENOTYPE_SIZE;
-
-    * If all goals have not been reached *
-    if (i == GENOTYPE_SIZE)
-        genotype->fitness += sqrt( pow((pos%LENGTH - map->start_pos%LENGTH),2) + pow((pos/LENGTH - map->start_pos/LENGTH), 2) );
-    else
-        genotype->fitness += GENOTYPE_SIZE - i;
-    */
-
 }
 
 void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2)
@@ -86,3 +62,8 @@ void mutate(genotype_t *in_out, int probability)
         }
     }
 }
+
+
+#ifdef __cplusplus
+}
+#endif

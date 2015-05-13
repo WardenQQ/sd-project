@@ -15,10 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../map.c \
-    ../gene.c
+    ../gene.c \
+    ../genotype.c \
+    ../population.c
 
 HEADERS  += mainwindow.h \
     ../map.h \
-    ../gene.h
+    ../gene.h \
+    ../genotype.h \
+    ../population.h
 
 FORMS    += mainwindow.ui
