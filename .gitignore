@@ -2,3 +2,5 @@
 
 #Name of the executable
 sd-project
+
+*.pro.user*

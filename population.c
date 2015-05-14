@@ -21,7 +21,7 @@ genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int
         if (i % MIGRATION_FREQUENCY == 0)
 //            emigrate(&pop, vers);
         for (j = 0; j < nb_children; j++) {
-            tournament_select(&parent1, &parent2, &pop, 5);
+            tournament_select(&parent1, &parent2, &pop, 10);
             crossover(&child, &parent1, &parent2);
             mutate(&child, 10);
             evaluate(&child, map);

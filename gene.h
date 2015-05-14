@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#define MIN_STEP 32
+#define MIN_STEP 1
 #define MAX_STEP 64
 
 

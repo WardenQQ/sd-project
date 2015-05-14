@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <time.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -9,9 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setGeometry(0, 0, LENGTH, HEIGHT);
 
-    random_map(&(this->map), 4, 2);
+    random_map(&(this->map), 9, 9);
 
-    best = genetic_algorithm(500, 50, &map, 0);
+    srand(time(NULL));
+
+    best = genetic_algorithm(1000, 50, &map, 0);
 }
 
 MainWindow::~MainWindow()
@@ -65,12 +69,13 @@ void MainWindow::displayPath()
 
     int i;
     map_object_t pos = map.start_pos;
+    unsigned long reached_goals;
 
     QPainterPath path;
     path.moveTo(pos.x, pos.y);
 
     for (i = 0; i < GENOTYPE_SIZE; i++) {
-        evaluate_gene(best.genes[i], &pos, &map);
+        evaluate_gene(best.genes[i], &pos, &map, &reached_goals);
         path.lineTo(pos.x, pos.y);
     }
 

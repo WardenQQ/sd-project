@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <float.h>
 
 #include "map.h"
 
@@ -58,12 +59,12 @@ int is_not_enough_space(map_t *map, map_object_t obj)
 
 int collides_with(map_object_t obj1, map_object_t obj2)
 {
-	return compute_distance(obj1, obj2) < obj1.radius + obj2.radius;
+    return squared_distance(obj1, obj2) < (obj1.radius + obj2.radius) * (obj1.radius + obj2.radius);
 }
 
-int compute_distance(map_object_t obj1, map_object_t obj2)
+double squared_distance(map_object_t obj1, map_object_t obj2)
 {
-	return sqrt( pow((obj1.x - obj2.x),2) + pow((obj1.y - obj2.y), 2) );
+    return (obj1.x - obj2.x) * (obj1.x - obj2.x) + (obj1.y - obj2.y) * (obj1.y - obj2.y);
 }
 
 map_object_t compute_position(map_object_t pos, int dir)
@@ -85,7 +86,7 @@ map_object_t compute_position(map_object_t pos, int dir)
     return res;
 }
 
-int evaluate_gene(gene_t g, map_object_t *pos, map_t *map)
+int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reached_goals)
 {
     map_object_t new_pos;
     int fitness = 0, i, j;
@@ -106,8 +107,9 @@ int evaluate_gene(gene_t g, map_object_t *pos, map_t *map)
 
         /* then over objectives. */
         for (j = 0;j < map->nb_goals; j++) {
-            if (collides_with(new_pos, map->goals[j])) {
-                fitness += 100;
+            if (!((*reached_goals >> j) & 1) && collides_with(new_pos, map->goals[j])) {
+                fitness += (MAX_RADIUS - new_pos.radius) / (MAX_RADIUS - MIN_RADIUS);
+                *reached_goals |= 1 << j;
             }
         }
 
@@ -121,16 +123,37 @@ void evaluate(genotype_t *genotype, map_t *map)
 {
     int i;
     map_object_t pos = map->start_pos;
+    unsigned long reached_goals = 0;
 
     genotype->fitness = 0;
     for (i = 0; i < GENOTYPE_SIZE; i++) {
-        genotype->fitness += evaluate_gene(genotype->genes[i], &pos, map);
+        genotype->fitness += evaluate_gene(genotype->genes[i], &pos, map, &reached_goals);
+    }
+
+    if (pow(2, map->nb_goals) - 1 == reached_goals) {
+        double sum;
+        for (i = 0; i < GENOTYPE_SIZE; i++) {
+            sum += genotype->genes[i].step;
+        }
+        genotype->fitness += (GENOTYPE_SIZE * MAX_STEP - sum) / (GENOTYPE_SIZE * MAX_STEP - GENOTYPE_SIZE * MIN_STEP);
+    } else {
+        double maxdist = LENGTH * LENGTH + HEIGHT * HEIGHT;
+        double mindist = maxdist;
+
+        for (i = 0; i < map->nb_goals; i++) {
+            if (!((reached_goals >> i) & 1)) {
+                double dist = squared_distance(pos, map->goals[i]);
+                mindist = dist < mindist ? dist : mindist;
+            }
+        }
+
+        genotype->fitness += (maxdist - mindist) / maxdist;
     }
 }
 
 int in_boundary(map_t * map, map_object_t pos)
 {
-    return pos.x >= 0 && pos.x < LENGTH && pos.y >= 0 && pos.y < HEIGHT;
+    return pos.x >= pos.radius && pos.x < LENGTH - pos.radius && pos.y >= pos.radius && pos.y < HEIGHT-pos.radius;
 }
 
 
