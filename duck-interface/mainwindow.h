@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0, map_t *p_map, genotype_t *p_best);
     ~MainWindow();
 
 protected:
@@ -28,7 +28,7 @@ private:
     map_t map;
     genotype_t best;
     void displayMap();
-    void displayPath();
+    void displayBestPath();
 };
 
 #endif // MAINWINDOW_H

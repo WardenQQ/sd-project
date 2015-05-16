@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 
-genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
+void genetic_algorithm(int nb_iterations, int nb_children, map_t *map, genotype_t *best, int vers)
 {
     int i, j;
     population_t pop;
@@ -31,9 +31,8 @@ genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int
 //            immigrate(&pop, vers);
 
         reduce_population(&pop);
+        *best = pop.genotypes[0];
     }
-    printf("\nThe fitness of the best DNA is : %g\n", pop.genotypes[0].fitness);
-    return pop.genotypes[0];
 }
 
 void init_population(population_t *out, map_t *map)

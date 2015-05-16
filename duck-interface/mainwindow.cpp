@@ -2,20 +2,16 @@
 #include "ui_mainwindow.h"
 
 #include <time.h>
+#include <thread>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, map_t *p_map, genotype_t *p_best) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    this->setGeometry(0, 0, LENGTH, HEIGHT);
-
-    random_map(&(this->map), 9, 9);
-
-    srand(time(NULL));
-
-    best = genetic_algorithm(1000, 50, &map, 0);
+    this->ui->mapFrame->setGeometry(0, 0, LENGTH, HEIGHT);
+    &(this->map) = p_map;
+    &(this->best) = p_best;
 }
 
 MainWindow::~MainWindow()
@@ -26,15 +22,12 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent *event)
 {
     this->displayMap();
-    this->displayPath();
+    this->displayBestPath();
 }
 
 void MainWindow::displayMap()
 {
     QPainter painter(this);
-
-    //painter.drawLine(1,1,100,100);
-
     painter.setRenderHint(QPainter::Antialiasing, true);
 //    painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
     painter.setBrush(QBrush(Qt::darkBlue, Qt::SolidPattern));
@@ -63,7 +56,7 @@ void MainWindow::displayMap()
 }
 
 
-void MainWindow::displayPath()
+void MainWindow::displayBestPath()
 {
     QPainter painter(this);
 
