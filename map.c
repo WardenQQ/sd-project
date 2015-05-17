@@ -10,47 +10,44 @@ extern "C" {
 
 int rand();
 
-void random_map(map_t *out, int width, int height, int nbr_of_blocks, int nbr_of_goals, int min_step, int max_step, int min_radius, int max_radius)
+void random_map(map_t *out, int width, int height, int nbr_of_blocks, int nbr_of_goals, int min_step, int max_step, int min_radius, int max_radius, int mutation_prob, int nb_children, int migration_freq)
 {
-	if (nbr_of_blocks >= MAX_BLOCKS_NBR || nbr_of_goals >= MAX_GOALS_NBR)
-	{
-		fprintf(stderr, "Invalid parameters for map creation. Blocks: %d (MAX: %d), goals: %d (MAX: %d), size: %dx%d\n",
-		 nbr_of_blocks, MAX_BLOCKS_NBR, nbr_of_goals, MAX_GOALS_NBR, HEIGHT, LENGTH);
-		return;
-	}
-
-	int i;
-	out->nb_blocks = 0;
-	out->nb_goals = 0;
+    int i;
+    out->nb_blocks = 0;
+    out->nb_goals = 0;
     out->width = width;
     out->height = height;
     out->min_step = min_step;
     out->max_step = max_step;
     out->min_radius = min_radius;
     out->max_radius = max_radius;
+    
+    out->mutation_prob = mutation_prob;
+    out->nb_children = nb_children;
+    out->migration_freq = migration_freq;
 
 	for (i = 0; i < nbr_of_blocks; i++) {
         do {
-            out->blocks[i].radius = rand() % MAX_RADIUS;
-            out->blocks[i].x = out->blocks[i].radius + rand() % (LENGTH - 2 * out->blocks[i].radius);
-            out->blocks[i].y = out->blocks[i].radius + rand() % (HEIGHT - 2 * out->blocks[i].radius);
+            out->blocks[i].radius = rand() % (max_radius - min_radius + 1) + min_radius;
+            out->blocks[i].x = out->blocks[i].radius + rand() % (width - 2 * out->blocks[i].radius);
+            out->blocks[i].y = out->blocks[i].radius + rand() % (height - 2 * out->blocks[i].radius);
         } while (is_not_enough_space(out, out->blocks[i]));
 		out->nb_blocks++;
 	}
 
 	for (i = 0; i < nbr_of_goals; i++) {
 		do {
-			out->goals[i].radius = MIN_RADIUS + nbr_of_goals-i;
-			out->goals[i].x = out->goals[i].radius + rand() % (LENGTH - 2 * out->goals[i].radius);
-			out->goals[i].y = out->goals[i].radius + rand() % (HEIGHT - 2 * out->goals[i].radius);
+            out->goals[i].radius = rand() % (max_radius - min_radius + 1) + min_radius;
+            out->goals[i].x = out->goals[i].radius + rand() % (width - 2 * out->goals[i].radius);
+            out->goals[i].y = out->goals[i].radius + rand() % (height - 2 * out->goals[i].radius);
 		} while (is_not_enough_space(out, out->goals[i]));
 		out->nb_goals++;
 	}
 
 	do {
-        out->start_pos.radius = MIN_RADIUS;
-		out->start_pos.x = out->start_pos.radius + rand() % (LENGTH - 2 * out->start_pos.radius);
-		out->start_pos.y = out->start_pos.radius + rand() % (HEIGHT - 2 * out->start_pos.radius);
+        out->start_pos.radius = min_radius;
+        out->start_pos.x = out->start_pos.radius + rand() % (width - 2 * out->start_pos.radius);
+        out->start_pos.y = out->start_pos.radius + rand() % (height - 2 * out->start_pos.radius);
 	} while (is_not_enough_space(out, out->start_pos));
 }
 
@@ -161,7 +158,7 @@ void evaluate(genotype_t *genotype, map_t *map)
 
 int in_boundary(map_t * map, map_object_t pos)
 {
-    return pos.x >= pos.radius && pos.x < LENGTH - pos.radius && pos.y >= pos.radius && pos.y < HEIGHT-pos.radius;
+    return pos.x >= pos.radius && pos.x < map->width - pos.radius && pos.y >= pos.radius && pos.y < map->height-pos.radius;
 }
 
 

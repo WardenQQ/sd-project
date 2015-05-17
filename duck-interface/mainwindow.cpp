@@ -72,16 +72,15 @@ void MainWindow::displayPath()
 
 void MainWindow::on_pushButton_clicked()
 {
-    random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value());
-
-    MapWidget *m = new MapWidget(&map, this);
+    random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value(), ui->sb_mutation->value(), ui->sb_children->value(), ui->sb_migration->value());
 
     QDialog q;
     QVBoxLayout *l = new QVBoxLayout;
+    MapWidget *m = new MapWidget(&map, this);
+
     l->addWidget(m);
-//    l->setGeometry(0, 0, );
-    q.adjustSize();
     q.setLayout(l);
+    q.adjustSize();
 
     q.exec();
 }

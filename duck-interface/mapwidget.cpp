@@ -8,7 +8,9 @@ MapWidget::MapWidget(map_t *map, QWidget *parent) :
     ui->setupUi(this);
     this->map = map;
 
-    this->setGeometry(0, 0, map->width, map->height);
+//    this->setGeometry(0, 0, map->width, map->height);
+    this->setMinimumWidth(map->width);
+    this->setMinimumHeight(map->height);
 }
 
 MapWidget::~MapWidget()
