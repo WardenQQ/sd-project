@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,14 +18,22 @@ SOURCES += main.cpp\
     ../gene.c \
     ../genotype.c \
     ../population.c \
-    mapwidget.cpp
+    mapwidget.cpp \
+    ../server.c \
+    ../types_xdr.c \
+    ../procedures.c \
+    ../client.c
 
 HEADERS  += mainwindow.h \
     ../map.h \
     ../gene.h \
     ../genotype.h \
     ../population.h \
-    mapwidget.h
+    mapwidget.h \
+    ../server.h \
+    ../types_xdr.h \
+    ../procedures.h \
+    ../client.h
 
 FORMS    += mainwindow.ui \
     mapwidget.ui

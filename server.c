@@ -2,28 +2,29 @@
 #include <rpc/xdr.h>
 #include <stdio.h>
 
-#include "procedures.h"
-#include "types_xdr.h"
+#include "server.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 int registerrpc(unsigned long prognum, unsigned long versnum,
                 unsigned long procnum, char *(*procname)(char *),
                 xdrproc_t inproc, xdrproc_t outproc);
 
-int main(int argc, char ** argv)
+void server(int vers)
 {
-    int vers = atoi(argv[1]);
-
     if (registerrpc(PROGNUM, vers,
                     PROC_INIT_SERVER, init_server,
-                    (xdrproc_t)xdr_int, (xdrproc_t)xdr_int) != 0) 
+                    (xdrproc_t)xdr_server_address_t, (xdrproc_t)xdr_int) != 0) 
     {
 	    fprintf(stderr,"Echec de l'enregistrement pour PROC_INIT_SERVER\n");
 	    exit(1);
     }
 
     if (registerrpc(PROGNUM, vers,
-                PROC_GIVE_SERVER_INFO, give_server_info,
-                (xdrproc_t)xdr_void, (xdrproc_t)xdr_server_info_t) != 0) 
+                PROC_GIVE_SERVER_LIST, give_server_list,
+                (xdrproc_t)xdr_void, (xdrproc_t)xdr_server_list_t) != 0) 
     {
 	    fprintf(stderr,"Echec de l'enregistrement pour PROC_GIVE_SERVER_INFO\n");
 	    exit(1);
@@ -31,7 +32,7 @@ int main(int argc, char ** argv)
 
     if (registerrpc(PROGNUM, vers,
                 PROC_ANNOUNCE_SELF, announce_self,
-                (xdrproc_t)xdr_int, (xdrproc_t)xdr_int) != 0) 
+                (xdrproc_t)xdr_server_address_t, (xdrproc_t)xdr_int) != 0) 
     {
 	    fprintf(stderr,"Echec de l'enregistrement pour PROC_ANNOUNCE_SELF\n");
 	    exit(1);
@@ -39,7 +40,7 @@ int main(int argc, char ** argv)
 
     if (registerrpc(PROGNUM, vers,
                 PROC_ADD_SERVER, add_server,
-                (xdrproc_t)xdr_int, (xdrproc_t)xdr_int) != 0) 
+                (xdrproc_t)xdr_server_address_t, (xdrproc_t)xdr_int) != 0) 
     {
 	    fprintf(stderr,"Echec de l'enregistrement pour PROC_ADD_SERVER\n");
 	    exit(1);
@@ -80,3 +81,8 @@ int main(int argc, char ** argv)
 
     svc_run();
 }
+
+
+#ifdef __cplusplus
+}
+#endif

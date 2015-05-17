@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -37,7 +38,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGridLayout *gridLayout_5;
+    QVBoxLayout *verticalLayout_4;
     QTabWidget *tabWidget;
     QWidget *tab;
     QVBoxLayout *verticalLayout_2;
@@ -66,7 +67,7 @@ public:
     QSpinBox *sb_goals;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
-    QPushButton *pushButton;
+    QPushButton *btn_generate_map;
     QSpacerItem *horizontalSpacer_2;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_4;
@@ -78,13 +79,15 @@ public:
     QSpinBox *sb_mutation;
     QFrame *line;
     QGroupBox *groupBox_6;
-    QHBoxLayout *horizontalLayout_5;
+    QGridLayout *gridLayout_6;
+    QSpinBox *sb_vers;
+    QLabel *label_17;
     QLabel *label_15;
-    QSpinBox *spinBox_2;
+    QComboBox *cb_ip;
     QFrame *line_4;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer_4;
-    QPushButton *pushButton_3;
+    QPushButton *btn_init_cluster;
     QWidget *page_2;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox_5;
@@ -93,9 +96,16 @@ public:
     QLabel *label_16;
     QSpinBox *spinBox;
     QLabel *label_14;
+    QGroupBox *groupBox_7;
+    QGridLayout *gridLayout_7;
+    QSpinBox *sb_vers_2;
+    QLabel *label_18;
+    QLabel *label_19;
+    QComboBox *cb_ip_2;
     QHBoxLayout *horizontalLayout_2;
     QSpacerItem *horizontalSpacer_3;
-    QPushButton *pushButton_2;
+    QPushButton *btn_join_cluster;
+    QSpacerItem *verticalSpacer;
     QWidget *tab2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -104,7 +114,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(513, 561);
+        MainWindow->resize(513, 690);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -112,10 +122,10 @@ public:
         MainWindow->setSizePolicy(sizePolicy);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayout_5 = new QGridLayout(centralWidget);
-        gridLayout_5->setSpacing(6);
-        gridLayout_5->setContentsMargins(11, 11, 11, 11);
-        gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
+        verticalLayout_4 = new QVBoxLayout(centralWidget);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tab = new QWidget();
@@ -128,7 +138,7 @@ public:
         toolBox->setObjectName(QStringLiteral("toolBox"));
         page = new QWidget();
         page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, -168, 461, 544));
+        page->setGeometry(QRect(0, -76, 461, 581));
         verticalLayout_3 = new QVBoxLayout(page);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -258,10 +268,10 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        pushButton = new QPushButton(page);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        btn_generate_map = new QPushButton(page);
+        btn_generate_map->setObjectName(QStringLiteral("btn_generate_map"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(btn_generate_map);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -326,19 +336,29 @@ public:
 
         groupBox_6 = new QGroupBox(page);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
-        horizontalLayout_5 = new QHBoxLayout(groupBox_6);
-        horizontalLayout_5->setSpacing(6);
-        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        gridLayout_6 = new QGridLayout(groupBox_6);
+        gridLayout_6->setSpacing(6);
+        gridLayout_6->setContentsMargins(11, 11, 11, 11);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+        sb_vers = new QSpinBox(groupBox_6);
+        sb_vers->setObjectName(QStringLiteral("sb_vers"));
+
+        gridLayout_6->addWidget(sb_vers, 0, 1, 1, 1);
+
+        label_17 = new QLabel(groupBox_6);
+        label_17->setObjectName(QStringLiteral("label_17"));
+
+        gridLayout_6->addWidget(label_17, 1, 0, 1, 1);
+
         label_15 = new QLabel(groupBox_6);
         label_15->setObjectName(QStringLiteral("label_15"));
 
-        horizontalLayout_5->addWidget(label_15);
+        gridLayout_6->addWidget(label_15, 0, 0, 1, 1);
 
-        spinBox_2 = new QSpinBox(groupBox_6);
-        spinBox_2->setObjectName(QStringLiteral("spinBox_2"));
+        cb_ip = new QComboBox(groupBox_6);
+        cb_ip->setObjectName(QStringLiteral("cb_ip"));
 
-        horizontalLayout_5->addWidget(spinBox_2);
+        gridLayout_6->addWidget(cb_ip, 1, 1, 1, 1);
 
 
         verticalLayout_3->addWidget(groupBox_6);
@@ -357,14 +377,14 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer_4);
 
-        pushButton_3 = new QPushButton(page);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        btn_init_cluster = new QPushButton(page);
+        btn_init_cluster->setObjectName(QStringLiteral("btn_init_cluster"));
         QFont font;
         font.setBold(true);
         font.setWeight(75);
-        pushButton_3->setFont(font);
+        btn_init_cluster->setFont(font);
 
-        horizontalLayout_3->addWidget(pushButton_3);
+        horizontalLayout_3->addWidget(btn_init_cluster);
 
 
         verticalLayout_3->addLayout(horizontalLayout_3);
@@ -372,7 +392,7 @@ public:
         toolBox->addItem(page, QString::fromUtf8("Cr\303\251er un cluster"));
         page_2 = new QWidget();
         page_2->setObjectName(QStringLiteral("page_2"));
-        page_2->setGeometry(QRect(0, 0, 473, 376));
+        page_2->setGeometry(QRect(0, 0, 473, 505));
         verticalLayout = new QVBoxLayout(page_2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -385,6 +405,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         lineEdit_3 = new QLineEdit(groupBox_5);
         lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        lineEdit_3->setClearButtonEnabled(true);
 
         gridLayout->addWidget(lineEdit_3, 1, 1, 1, 1);
 
@@ -406,6 +427,35 @@ public:
 
         verticalLayout->addWidget(groupBox_5);
 
+        groupBox_7 = new QGroupBox(page_2);
+        groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
+        gridLayout_7 = new QGridLayout(groupBox_7);
+        gridLayout_7->setSpacing(6);
+        gridLayout_7->setContentsMargins(11, 11, 11, 11);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        sb_vers_2 = new QSpinBox(groupBox_7);
+        sb_vers_2->setObjectName(QStringLiteral("sb_vers_2"));
+
+        gridLayout_7->addWidget(sb_vers_2, 0, 1, 1, 1);
+
+        label_18 = new QLabel(groupBox_7);
+        label_18->setObjectName(QStringLiteral("label_18"));
+
+        gridLayout_7->addWidget(label_18, 1, 0, 1, 1);
+
+        label_19 = new QLabel(groupBox_7);
+        label_19->setObjectName(QStringLiteral("label_19"));
+
+        gridLayout_7->addWidget(label_19, 0, 0, 1, 1);
+
+        cb_ip_2 = new QComboBox(groupBox_7);
+        cb_ip_2->setObjectName(QStringLiteral("cb_ip_2"));
+
+        gridLayout_7->addWidget(cb_ip_2, 1, 1, 1, 1);
+
+
+        verticalLayout->addWidget(groupBox_7);
+
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
@@ -413,21 +463,22 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer_3);
 
-        pushButton_2 = new QPushButton(page_2);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setFont(font);
+        btn_join_cluster = new QPushButton(page_2);
+        btn_join_cluster->setObjectName(QStringLiteral("btn_join_cluster"));
+        btn_join_cluster->setFont(font);
 
-        horizontalLayout_2->addWidget(pushButton_2);
+        horizontalLayout_2->addWidget(btn_join_cluster);
 
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
         toolBox->addItem(page_2, QStringLiteral("Rejoindre un cluster"));
         groupBox_5->raise();
-        spinBox_2->raise();
-        label_15->raise();
-        label_15->raise();
-        spinBox_2->raise();
+        groupBox_7->raise();
 
         verticalLayout_2->addWidget(toolBox);
 
@@ -436,7 +487,7 @@ public:
         tab2->setObjectName(QStringLiteral("tab2"));
         tabWidget->addTab(tab2, QString());
 
-        gridLayout_5->addWidget(tabWidget, 0, 0, 1, 1);
+        verticalLayout_4->addWidget(tabWidget);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -450,7 +501,7 @@ public:
         retranslateUi(MainWindow);
 
         tabWidget->setCurrentIndex(0);
-        toolBox->setCurrentIndex(0);
+        toolBox->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -471,20 +522,25 @@ public:
         label_7->setText(QApplication::translate("MainWindow", "Taille d'objet max", 0));
         label_6->setText(QApplication::translate("MainWindow", "Nombre d'objectifs", 0));
         label_8->setText(QApplication::translate("MainWindow", "Taille d'objet min", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "G\303\251n\303\251rer une carte al\303\251atoire", 0));
-        groupBox_3->setTitle(QApplication::translate("MainWindow", "Param\303\250tre de l'algorithme g\303\251netique", 0));
+        btn_generate_map->setText(QApplication::translate("MainWindow", "G\303\251n\303\251rer une carte al\303\251atoire", 0));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "Algorithme g\303\251netique", 0));
         label_9->setText(QApplication::translate("MainWindow", "Probabilit\303\251 de mutation", 0));
         label_13->setText(QApplication::translate("MainWindow", "Fr\303\251quence de migration", 0));
         label_10->setText(QApplication::translate("MainWindow", "Nombre d'enfants par g\303\251n\303\251ration", 0));
-        groupBox_6->setTitle(QApplication::translate("MainWindow", "Param\303\250tre du nouveau cluster", 0));
+        groupBox_6->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
+        label_17->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         label_15->setText(QApplication::translate("MainWindow", "Identifiant", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Lancer !", 0));
+        btn_init_cluster->setText(QApplication::translate("MainWindow", "Lancer !", 0));
         toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Cr\303\251er un cluster", 0));
-        groupBox_5->setTitle(QApplication::translate("MainWindow", "Information du contact", 0));
+        groupBox_5->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
+        lineEdit_3->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
         lineEdit_3->setText(QApplication::translate("MainWindow", "127.0.0.1", 0));
         label_16->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         label_14->setText(QApplication::translate("MainWindow", "Identifiant", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Lancer !", 0));
+        groupBox_7->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
+        label_18->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
+        label_19->setText(QApplication::translate("MainWindow", "Identifiant", 0));
+        btn_join_cluster->setText(QApplication::translate("MainWindow", "Lancer !", 0));
         toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "Rejoindre un cluster", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Param\303\250tres", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab2), QApplication::translate("MainWindow", "Voir les r\303\251sultats", 0));

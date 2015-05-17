@@ -4,12 +4,17 @@
 
 #include <QDialog>
 #include <QVBoxLayout>
+#include <unistd.h>
+#include <QHostAddress>
+#include <QNetworkInterface>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setIP();
 }
 
 MainWindow::~MainWindow()
@@ -70,7 +75,7 @@ void MainWindow::displayPath()
     painter.drawPath(path);
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_btn_generate_map_clicked()
 {
     random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value(), ui->sb_mutation->value(), ui->sb_children->value(), ui->sb_migration->value());
 
@@ -83,4 +88,27 @@ void MainWindow::on_pushButton_clicked()
     q.adjustSize();
 
     q.exec();
+}
+
+void MainWindow::on_btn_init_cluster_clicked()
+{
+    if (fork() == 0)
+        server(ui->sb_vers->value());
+    else
+        client_init(ui->sb_vers->value(), ui->cb_ip->currentText().toLatin1().data(), map);
+}
+
+void MainWindow::on_btn_join_cluster_clicked()
+{
+    if (fork() == 0)
+       server(ui->sb_vers->value());
+}
+
+void MainWindow::setIP()
+{
+    foreach ( const QHostAddress &addr, QNetworkInterface::allAddresses() )
+        if ( addr.protocol() == QAbstractSocket::IPv4Protocol && addr != QHostAddress(QHostAddress::LocalHost) ) {
+            ui->cb_ip->addItem(addr.toString());
+            ui->cb_ip_2->addItem(addr.toString());
+        }
 }

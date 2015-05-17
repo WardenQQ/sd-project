@@ -6,6 +6,8 @@
 #include "../map.h"
 #include "../genotype.h"
 #include "../population.h"
+#include "../server.h"
+#include "../client.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,7 +23,11 @@ public:
 
 
 private slots:
-    void on_pushButton_clicked();
+    void on_btn_generate_map_clicked();
+
+    void on_btn_init_cluster_clicked();
+
+    void on_btn_join_cluster_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -29,6 +35,7 @@ private:
     genotype_t best;
     void displayMap();
     void displayPath();
+    void setIP();
 };
 
 #endif // MAINWINDOW_H
