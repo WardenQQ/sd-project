@@ -27,14 +27,20 @@ typedef struct {
 } map_object_t;
 
 typedef struct {
+    int width;
+    int height;
     map_object_t blocks[MAX_BLOCKS_NBR];
     int nb_blocks;
     map_object_t goals[MAX_GOALS_NBR];
     int nb_goals;
     map_object_t start_pos;
+    int min_step;
+    int max_step;
+    int min_radius;
+    int max_radius;
 } map_t;
 
-void random_map(map_t *out, int nbr_of_block, int nbr_of_goals);
+void random_map(map_t *out, int width, int height, int nbr_of_block, int nbr_of_goals, int min_step, int max_step, int min_radius, int max_radius);
 
 int is_not_enough_space(map_t *map, map_object_t obj);
 

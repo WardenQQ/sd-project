@@ -1,32 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mapwidget.h"
 
-#include <time.h>
+#include <QDialog>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    this->setGeometry(0, 0, LENGTH, HEIGHT);
-
-    random_map(&(this->map), 9, 9);
-
-    srand(time(NULL));
-
-    best = genetic_algorithm(1000, 50, &map, 0);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::paintEvent(QPaintEvent *event)
-{
-    this->displayMap();
-    this->displayPath();
 }
 
 void MainWindow::displayMap()
@@ -80,4 +68,20 @@ void MainWindow::displayPath()
     }
 
     painter.drawPath(path);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value());
+
+    MapWidget *m = new MapWidget(&map, this);
+
+    QDialog q;
+    QVBoxLayout *l = new QVBoxLayout;
+    l->addWidget(m);
+//    l->setGeometry(0, 0, );
+    q.adjustSize();
+    q.setLayout(l);
+
+    q.exec();
 }

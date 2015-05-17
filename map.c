@@ -10,7 +10,7 @@ extern "C" {
 
 int rand();
 
-void random_map(map_t *out, int nbr_of_blocks, int nbr_of_goals)
+void random_map(map_t *out, int width, int height, int nbr_of_blocks, int nbr_of_goals, int min_step, int max_step, int min_radius, int max_radius)
 {
 	if (nbr_of_blocks >= MAX_BLOCKS_NBR || nbr_of_goals >= MAX_GOALS_NBR)
 	{
@@ -22,11 +22,19 @@ void random_map(map_t *out, int nbr_of_blocks, int nbr_of_goals)
 	int i;
 	out->nb_blocks = 0;
 	out->nb_goals = 0;
+    out->width = width;
+    out->height = height;
+    out->min_step = min_step;
+    out->max_step = max_step;
+    out->min_radius = min_radius;
+    out->max_radius = max_radius;
 
 	for (i = 0; i < nbr_of_blocks; i++) {
-		out->blocks[i].radius = rand() % MAX_RADIUS;
-		out->blocks[i].x = out->blocks[i].radius + rand() % (LENGTH - 2 * out->blocks[i].radius);
-		out->blocks[i].y = out->blocks[i].radius + rand() % (HEIGHT - 2 * out->blocks[i].radius);
+        do {
+            out->blocks[i].radius = rand() % MAX_RADIUS;
+            out->blocks[i].x = out->blocks[i].radius + rand() % (LENGTH - 2 * out->blocks[i].radius);
+            out->blocks[i].y = out->blocks[i].radius + rand() % (HEIGHT - 2 * out->blocks[i].radius);
+        } while (is_not_enough_space(out, out->blocks[i]));
 		out->nb_blocks++;
 	}
 

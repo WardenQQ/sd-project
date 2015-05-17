@@ -17,12 +17,15 @@ SOURCES += main.cpp\
     ../map.c \
     ../gene.c \
     ../genotype.c \
-    ../population.c
+    ../population.c \
+    mapwidget.cpp
 
 HEADERS  += mainwindow.h \
     ../map.h \
     ../gene.h \
     ../genotype.h \
-    ../population.h
+    ../population.h \
+    mapwidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    mapwidget.ui
