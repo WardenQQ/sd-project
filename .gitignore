@@ -2,5 +2,7 @@
 
 #Name of the executable
 sd-project
+server
+client
 
 *.pro.user*
