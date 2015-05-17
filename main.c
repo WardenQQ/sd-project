@@ -138,7 +138,6 @@ void client(int vers, int contact)
         stat = callrpc("localhost", PROGNUM, vers, PROC_ANNOUNCE_SELF,
                 (xdrproc_t)xdr_int, (char *)&contact,
                 (xdrproc_t)xdr_int, (char *)&err);
-        clnt_perrno(stat);putchar('\n');
 
         stat = callrpc("localhost", PROGNUM, vers, PROC_GET_MAP,
                 (xdrproc_t)xdr_void, (char *)&vers,
