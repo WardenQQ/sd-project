@@ -79,49 +79,49 @@ void tournament_select(genotype_t *parent1, genotype_t *parent2, population_t *p
     *parent2 = pop->genotypes[second];
 }
 
-void emigrate(population_t *pop, int vers)
+void emigrate(population_t *pop, server_address_t addr)
 {
-//    int i, err;
-//    migrants_t m;
-//    enum clnt_stat stat;
-//    for (i = 0; i < MIGRATION_SIZE; i++)
-//        m.pop[i] = pop->genotypes[i];
+    int i, err;
+    migrants_t m;
+    enum clnt_stat stat;
+    for (i = 0; i < MIGRATION_SIZE; i++)
+        m.pop[i] = pop->genotypes[i];
     
-//    if ( (stat = callrpc("localhost", PROGNUM, vers, PROC_SEND_MIGRANTS,
-//            (xdrproc_t)xdr_migrants_t, (char *)&m,
-//            (xdrproc_t)xdr_int, (char *)&err)) )
-//    {
-//        fprintf(stderr, "Echec de l'appel distant (");
-//        clnt_perrno(stat);      fprintf(stderr, ")\n");
-//    }
+    if ( (stat = callrpc(addr.hostname, PROGNUM, addr.id, PROC_SEND_MIGRANTS,
+            (xdrproc_t)xdr_migrants_t, (char *)&m,
+            (xdrproc_t)xdr_int, (char *)&err)) )
+    {
+        fprintf(stderr, "Echec de l'appel distant (");
+        clnt_perrno(stat);      fprintf(stderr, ")\n");
+    }
 }
 
 
-void immigrate(population_t *out, int vers)
+void immigrate(population_t *out, server_address_t addr)
 {
-//    int i, dice;
-//    migrants_t m;
-//    server_info_t info;
-//    enum clnt_stat stat;
+    int i, dice;
+    migrants_t m;
+    server_list_t list;
+    enum clnt_stat stat;
     
-//    callrpc("localhost", PROGNUM, vers, PROC_GIVE_SERVER_INFO,
-//            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_server_info_t, (char *)&info);
+    callrpc(addr.hostname, PROGNUM, addr.id, PROC_GIVE_SERVER_LIST,
+            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_server_list_t, (char *)&list);
 
-//    if (info.size != 0)
-//    {
-//        dice = rand() % info.size;
+    if (list.size != 0)
+    {
+        dice = rand() % list.size;
 
-//        if ( (stat = callrpc("localhost", PROGNUM, info.id[dice], PROC_RECEIVE_MIGRANTS,
-//                (xdrproc_t)xdr_void, NULL,
-//                (xdrproc_t)xdr_migrants_t, (char *)&m)) )
-//        {
-//            fprintf(stderr, "Echec de l'appel distant (");
-//            clnt_perrno(stat);      fprintf(stderr, ")\n");
-//        }
+        if ( (stat = callrpc(list.addr[dice].hostname, PROGNUM, list.addr[dice].id, PROC_RECEIVE_MIGRANTS,
+                (xdrproc_t)xdr_void, NULL,
+                (xdrproc_t)xdr_migrants_t, (char *)&m)) )
+        {
+            fprintf(stderr, "Echec de l'appel distant (");
+            clnt_perrno(stat);      fprintf(stderr, ")\n");
+        }
     
-//        for (i = 0; i < MIGRATION_SIZE; i++)
-//            add_to_population(out, &(m.pop[i]) );
-//    }
+        for (i = 0; i < MIGRATION_SIZE; i++)
+            add_to_population(out, &(m.pop[i]) );
+    }
 }
 
 

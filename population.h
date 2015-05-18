@@ -1,6 +1,7 @@
 #pragma once
 
 #include "map.h"
+#include "procedures.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,9 +26,9 @@ void reduce_population(population_t *in_out);
 
 void tournament_select(genotype_t *parent1, genotype_t *parent2, population_t *pop, int tournament_size);
 
-void emigrate(population_t *pop, int vers);
+void emigrate(population_t *pop, server_address_t addr);
 
-void immigrate(population_t *out, int vers);
+void immigrate(population_t *out, server_address_t addr);
 
 
 #ifdef __cplusplus
