@@ -95,13 +95,18 @@ void MainWindow::on_btn_init_cluster_clicked()
     if (fork() == 0)
         server(ui->sb_vers->value());
     else
-        client_init(ui->sb_vers->value(), ui->cb_ip->currentText().toLatin1().data(), map);
+        client_init(ui->sb_vers->value(), ui->cb_ip->currentText().toLocal8Bit().data(), map);
 }
 
 void MainWindow::on_btn_join_cluster_clicked()
 {
-    if (fork() == 0)
+    if (fork() == 0) {
        server(ui->sb_vers->value());
+    } else {
+        QString qs = ui->lineEdit_3->text().remove(QRegExp("_"));
+        char * ip_contact = qs.toLocal8Bit().data();
+        int a = 0;
+    }
 }
 
 void MainWindow::setIP()

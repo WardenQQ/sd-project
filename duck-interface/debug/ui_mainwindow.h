@@ -138,7 +138,7 @@ public:
         toolBox->setObjectName(QStringLiteral("toolBox"));
         page = new QWidget();
         page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, -76, 461, 581));
+        page->setGeometry(QRect(0, 0, 449, 581));
         verticalLayout_3 = new QVBoxLayout(page);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -405,7 +405,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         lineEdit_3 = new QLineEdit(groupBox_5);
         lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-        lineEdit_3->setClearButtonEnabled(true);
+        lineEdit_3->setClearButtonEnabled(false);
 
         gridLayout->addWidget(lineEdit_3, 1, 1, 1, 1);
 
