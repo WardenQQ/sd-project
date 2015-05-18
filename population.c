@@ -14,15 +14,14 @@ genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t add
     int i, j;
     genotype_t parent1, parent2, child;
 
-    init_population(pop, map);
-
-    for (i = 0; i < 100; i++) {
+    i = 0;
+    while (1) {
         if (i % map->migration_freq == 0) {
             emigrate(pop, addr);
         }
 
         for (j = 0; j < map->nb_children; j++) {
-            tournament_select(&parent1, &parent2, pop, 10);
+            tournament_select(&parent1, &parent2, pop, 3);
             crossover(&child, &parent1, &parent2);
             mutate(&child, map->mutation_prob);
             evaluate(&child, map);
@@ -31,9 +30,11 @@ genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t add
 
         if (i % map->migration_freq == 0) {
             immigrate(pop, addr);
+            fprintf(stderr, "%g \n", pop->genotypes[0].fitness);
         }
 
         reduce_population(pop);
+        i = (i + 1) % map->migration_freq;
     }
 }
 
@@ -60,7 +61,13 @@ void add_to_population(population_t *pop, genotype_t *genotype)
 
 void reduce_population(population_t *in_out)
 {
-    qsort(in_out->genotypes, in_out->size, sizeof(*(in_out->genotypes)), compare_genotype);
+    int size = in_out->size - REDUCED_POPULATION_SIZE;
+    memmove(&(in_out->genotypes[REDUCED_POPULATION_SIZE - size]),
+            &(in_out->genotypes[REDUCED_POPULATION_SIZE]),
+            size * sizeof(*(in_out->genotypes)));
+
+    qsort(in_out->genotypes, REDUCED_POPULATION_SIZE, sizeof(*(in_out->genotypes)), compare_genotype);
+
     in_out->size = REDUCED_POPULATION_SIZE;
 }
 

@@ -1,5 +1,7 @@
 #include <rpc/rpc.h>
 #include <rpc/xdr.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "client.h"
 
@@ -46,6 +48,7 @@ void client_join(server_address_t self, server_address_t contact)
     init_population(&pop, &map);
     emigrate(&pop, self);
 
+    srand(time(NULL));
     genetic_algorithm(&map, &pop, self);
 }
 
