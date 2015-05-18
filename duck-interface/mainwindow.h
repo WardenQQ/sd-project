@@ -40,6 +40,7 @@ private:
     void displayMap();
     void displayPath();
     void setIP();
+    void setGAParameters();
 };
 
 #endif // MAINWINDOW_H

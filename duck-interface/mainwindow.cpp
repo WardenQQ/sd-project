@@ -74,9 +74,24 @@ void MainWindow::displayPath()
     painter.drawPath(path);
 }
 
+void MainWindow::setGAParameters()
+{
+    map.mutation_prob = ui->sb_mutation->value();
+    map.nb_children = ui->sb_children->value();
+    map.migration_freq = ui->sb_migration->value();
+}
+
 void MainWindow::on_btn_generate_map_clicked()
 {
-    random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value(), ui->sb_mutation->value(), ui->sb_children->value(), ui->sb_migration->value());
+    map.width = ui->sb_width->value();
+    map.height = ui->sb_height->value();
+    map.nb_blocks = ui->sb_blocks->value();
+    map.nb_goals = ui->sb_goals->value();
+    map.min_step = ui->sb_stepMin->value();
+    map.max_step = ui->sb_stepMax->value();
+    map.min_radius = ui->sb_radius_min->value();
+    map.max_radius = ui->sb_radius_max->value();
+    random_map(&map);
 
     QDialog q;
     QVBoxLayout *l = new QVBoxLayout;
@@ -91,6 +106,8 @@ void MainWindow::on_btn_generate_map_clicked()
 
 void MainWindow::on_btn_init_cluster_clicked()
 {
+    setGAParameters();
+
     if (fork() == 0) {
         server(ui->sb_vers->value());
     } else {
@@ -107,6 +124,8 @@ void MainWindow::on_btn_init_cluster_clicked()
 
 void MainWindow::on_btn_join_cluster_clicked()
 {
+    setGAParameters();
+
     if (fork() == 0) {
        server(ui->sb_vers_2->value());
     } else {
