@@ -18,11 +18,13 @@ void client_init(int vers, char *ip, map_t map)
             (xdrproc_t)xdr_map_t, (char *)&map,
             (xdrproc_t)xdr_int, (char *)&err);
 
-    genetic_algorithm(100, map.nb_children, &map, vers);
+    genetic_algorithm(&map, &pop, self);
 }
 
 void client_join(server_address_t self, server_address_t contact)
 {
+    population_t pop;
+
     pair_with_server(self);
 
     map_t map;
@@ -36,7 +38,10 @@ void client_join(server_address_t self, server_address_t contact)
             (xdrproc_t)xdr_void, NULL,
             (xdrproc_t)xdr_map_t, (char *)&map);
 
-    genetic_algorithm(100, map.nb_children, &map, self.id);
+    init_population(&pop, &map);
+    emigrate(&pop, self);
+
+    genetic_algorithm(&map, &pop, self);
 }
 
 void pair_with_server(server_address_t self)

@@ -2,6 +2,7 @@
 
 #include "procedures.h"
 #include "types_xdr.h"
+#include "population.h"
 
 #ifdef __cplusplus
 extern "C" {

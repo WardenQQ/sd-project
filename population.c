@@ -9,31 +9,32 @@ extern "C" {
 #endif
 
 
-genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers)
+genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t addr)
 {
     int i, j;
-    population_t pop;
     genotype_t parent1, parent2, child;
 
-    init_population(&pop, map);
+    init_population(pop, map);
 
-    for (i = 0; i < nb_iterations; i++) {
-        if (i % MIGRATION_FREQUENCY == 0)
-//            emigrate(&pop, vers);
-        for (j = 0; j < nb_children; j++) {
-            tournament_select(&parent1, &parent2, &pop, 10);
-            crossover(&child, &parent1, &parent2);
-            mutate(&child, 10);
-            evaluate(&child, map);
-            add_to_population(&pop, &child);
+    for (i = 0; i < 100; i++) {
+        if (i % map->migration_freq == 0) {
+            emigrate(pop, addr);
         }
-        if (i % MIGRATION_FREQUENCY == 0)
-//            immigrate(&pop, vers);
 
-        reduce_population(&pop);
+        for (j = 0; j < map->nb_children; j++) {
+            tournament_select(&parent1, &parent2, pop, 10);
+            crossover(&child, &parent1, &parent2);
+            mutate(&child, map->mutation_prob);
+            evaluate(&child, map);
+            add_to_population(pop, &child);
+        }
+
+        if (i % map->migration_freq == 0) {
+            immigrate(pop, addr);
+        }
+
+        reduce_population(pop);
     }
-    printf("\nThe fitness of the best DNA is : %g\n", pop.genotypes[0].fitness);
-    return pop.genotypes[0];
 }
 
 void init_population(population_t *out, map_t *map)

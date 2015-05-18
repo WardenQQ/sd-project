@@ -16,7 +16,7 @@ typedef struct {
     int size;
 } population_t;
 
-genotype_t genetic_algorithm(int nb_iterations, int nb_children, map_t *map, int vers);
+genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t addr);
 
 void init_population(population_t *out, map_t *map);
 
