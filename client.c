@@ -38,12 +38,10 @@ void client_join(server_address_t self, server_address_t contact)
     stat = callrpc(self.hostname, PROGNUM, self.id, PROC_ANNOUNCE_SELF,
             (xdrproc_t)xdr_server_address_t, (char *)&contact,
             (xdrproc_t)xdr_int, (char *)&err);
-    clnt_perrno(stat);
 
     stat = callrpc(self.hostname, PROGNUM, self.id, PROC_GET_MAP,
             (xdrproc_t)xdr_void, NULL,
             (xdrproc_t)xdr_map_t, (char *)&map);
-    clnt_perrno(stat);
 
     init_population(&pop, &map);
     emigrate(&pop, self);

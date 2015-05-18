@@ -1,14 +1,14 @@
 #include "mapwidget.h"
 #include "ui_mapwidget.h"
 
-MapWidget::MapWidget(map_t *map, QWidget *parent) :
+MapWidget::MapWidget(map_t *map, genotype_t *path, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MapWidget)
 {
     ui->setupUi(this);
     this->map = map;
+    this->path = path;
 
-//    this->setGeometry(0, 0, map->width, map->height);
     this->setMinimumWidth(map->width);
     this->setMinimumHeight(map->height);
 }
@@ -21,6 +21,20 @@ MapWidget::~MapWidget()
 void MapWidget::paintEvent(QPaintEvent *event)
 {
     displayMap();
+    if (path != NULL)
+        displayPath();
+}
+
+void MapWidget::popUp()
+{
+    QDialog q;
+    QVBoxLayout *l = new QVBoxLayout;
+
+    l->addWidget(this);
+    q.setLayout(l);
+    q.adjustSize();
+
+    q.exec();
 }
 
 void MapWidget::displayMap()
@@ -54,4 +68,23 @@ void MapWidget::displayMap()
     x = map->start_pos.x - r;
     y = map->start_pos.y - r;
     painter.drawEllipse(x, y, r*2, r*2);
+}
+
+void MapWidget::displayPath()
+{
+    QPainter painter(this);
+
+    int i;
+    map_object_t pos = map->start_pos;
+    unsigned long reached_goals;
+
+    QPainterPath q_path;
+    q_path.moveTo(pos.x, pos.y);
+
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
+        evaluate_gene(path->genes[i], &pos, map, &reached_goals);
+        q_path.lineTo(pos.x, pos.y);
+    }
+
+    painter.drawPath(q_path);
 }

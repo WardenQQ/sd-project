@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value(), ui->sb_mutation->value(), ui->sb_children->value(), ui->sb_migration->value());
+
     setIP();
 }
 
@@ -54,33 +56,13 @@ void MainWindow::displayMap()
     painter.drawEllipse(x, y, r*2, r*2);
 }
 
-
-void MainWindow::displayPath()
-{
-    QPainter painter(this);
-
-    int i;
-    map_object_t pos = map.start_pos;
-    unsigned long reached_goals;
-
-    QPainterPath path;
-    path.moveTo(pos.x, pos.y);
-
-    for (i = 0; i < GENOTYPE_SIZE; i++) {
-        evaluate_gene(best.genes[i], &pos, &map, &reached_goals);
-        path.lineTo(pos.x, pos.y);
-    }
-
-    painter.drawPath(path);
-}
-
 void MainWindow::on_btn_generate_map_clicked()
 {
     random_map(&map, ui->sb_width->value(), ui->sb_height->value(), ui->sb_blocks->value(), ui->sb_goals->value(), ui->sb_stepMin->value(), ui->sb_stepMax->value(), ui->sb_radius_min->value(), ui->sb_radius_max->value(), ui->sb_mutation->value(), ui->sb_children->value(), ui->sb_migration->value());
+    MapWidget *m = new MapWidget(&map, NULL, this);
 
     QDialog q;
     QVBoxLayout *l = new QVBoxLayout;
-    MapWidget *m = new MapWidget(&map, this);
 
     l->addWidget(m);
     q.setLayout(l);
@@ -143,14 +125,48 @@ void MainWindow::on_btn_refresh_clicked()
     contact.id = ui->sb_res_id->value();
     strncpy(contact.hostname, ui->txt_res_ip->text().remove(QRegExp("_")).toLocal8Bit().data(), 64);
 
-    callrpc(contact.hostname, PROGNUM, contact.id, PROC_GIVE_SERVER_LIST,
+    int stat;
+    stat = callrpc(contact.hostname, PROGNUM, contact.id, PROC_GIVE_SERVER_LIST,
             (xdrproc_t)xdr_void, (char *)&ret, (xdrproc_t)xdr_server_list_t, (char *)&list);
 
+    stat = callrpc(contact.hostname, PROGNUM, contact.id, PROC_GET_MAP,
+            (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_map_t, (char *)&map);
+    clnt_perrno((enum clnt_stat)stat);
+
+    QString text;
+    migrants_t migr;
     ui->listWidget->clear();
     for(int i = 0; i < list.size; i++) {
-        QString text = QString(list.addr[i].hostname).append(" \t%0").arg(list.addr[i].id).append(" ");
+        callrpc(list.addr[i].hostname, PROGNUM, list.addr[i].id, PROC_RECEIVE_MIGRANTS,
+                (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_migrants_t, (char *)&migr);
+        this->bests[i] = migr.pop[0];
+        text = QString(list.addr[i].hostname).append(" \t%0").arg(list.addr[i].id).append(" \t%0").arg(migr.pop[0].fitness);
         ui->listWidget->addItem(text);
     }
-    QString text = QString("127.0.0.1").append(" \t%0").arg(contact.id).append(" ");
-    ui->listWidget->addItem(text);
+
+    if (stat == RPC_SUCCESS) {
+        callrpc(contact.hostname, PROGNUM, contact.id, PROC_RECEIVE_MIGRANTS,
+                (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_migrants_t, (char *)&migr);
+        this->bests[list.size] = migr.pop[0];
+        text = QString(contact.hostname).append(" \t%0").arg(contact.id).append(" \t%0").arg(migr.pop[0].fitness);
+        ui->listWidget->addItem(text);
+    } else {
+        ui->listWidget->addItem("Il n'y a aucun cluster lancé pour ce couple (adresse+identifiant)...");
+    }
+}
+
+void MainWindow::on_btn_display_path_clicked()
+{
+    int idx = ui->listWidget->currentRow();
+
+    MapWidget *m = new MapWidget(&map, &(bests[idx]), this);
+
+    QDialog q;
+    QVBoxLayout *l = new QVBoxLayout;
+
+    l->addWidget(m);
+    q.setLayout(l);
+    q.adjustSize();
+
+    q.exec();
 }

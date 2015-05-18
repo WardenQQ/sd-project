@@ -33,12 +33,13 @@ private slots:
 
     void on_btn_refresh_clicked();
 
+    void on_btn_display_path_clicked();
+
 private:
     Ui::MainWindow *ui;
     map_t map;
-    genotype_t best;
+    genotype_t bests[SERVER_LIST_MAX];
     void displayMap();
-    void displayPath();
     void setIP();
 };
 

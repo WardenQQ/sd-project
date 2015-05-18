@@ -130,7 +130,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(550, 750);
+        MainWindow->resize(576, 750);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -154,7 +154,7 @@ public:
         toolBox->setObjectName(QStringLiteral("toolBox"));
         page = new QWidget();
         page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, 0, 510, 565));
+        page->setGeometry(QRect(0, 0, 536, 565));
         verticalLayout_3 = new QVBoxLayout(page);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -404,7 +404,7 @@ public:
         toolBox->addItem(page, QString::fromUtf8("Cr\303\251er un cluster"));
         page_2 = new QWidget();
         page_2->setObjectName(QStringLiteral("page_2"));
-        page_2->setGeometry(QRect(0, 0, 510, 565));
+        page_2->setGeometry(QRect(0, 0, 536, 565));
         verticalLayout = new QVBoxLayout(page_2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -547,7 +547,6 @@ public:
 
         listWidget = new QListWidget(tab2);
         new QListWidgetItem(listWidget);
-        new QListWidgetItem(listWidget);
         listWidget->setObjectName(QStringLiteral("listWidget"));
 
         verticalLayout_5->addWidget(listWidget);
@@ -582,7 +581,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 550, 29));
+        menuBar->setGeometry(QRect(0, 0, 576, 29));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -590,8 +589,8 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
-        toolBox->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(1);
+        toolBox->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -643,9 +642,7 @@ public:
         const bool __sortingEnabled = listWidget->isSortingEnabled();
         listWidget->setSortingEnabled(false);
         QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "127.0.0.1 \\t 1", 0));
-        QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "Nouvel \303\251l\303\251ment", 0));
+        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "Veuillez actualiser pour voir les r\303\251sultats", 0));
         listWidget->setSortingEnabled(__sortingEnabled);
 
         btn_display_path->setText(QApplication::translate("MainWindow", "Afficher le chemin", 0));

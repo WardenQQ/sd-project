@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
+    <width>576</width>
     <height>750</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -34,14 +34,14 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>510</width>
+             <width>536</width>
              <height>565</height>
             </rect>
            </property>
@@ -410,7 +410,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>510</width>
+             <width>536</width>
              <height>565</height>
             </rect>
            </property>
@@ -631,12 +631,7 @@
          <widget class="QListWidget" name="listWidget">
           <item>
            <property name="text">
-            <string>127.0.0.1 \t 1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Nouvel élément</string>
+            <string>Veuillez actualiser pour voir les résultats</string>
            </property>
           </item>
          </widget>
@@ -702,7 +697,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>550</width>
+     <width>576</width>
      <height>29</height>
     </rect>
    </property>
