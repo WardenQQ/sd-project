@@ -98,6 +98,7 @@ void MainWindow::on_btn_init_cluster_clicked()
         server_address_t self;
         self.id = ui->sb_vers->value();
         strncpy(self.hostname, ui->cb_ip->currentText().toLocal8Bit().data(), 64);
+
         client_init(self, map);
     }
 }
@@ -108,13 +109,13 @@ void MainWindow::on_btn_join_cluster_clicked()
        server(ui->sb_vers->value());
     } else {
         server_address_t self, contact;
-        self.id = ui->sb_vers->value();
-        strncpy(self.hostname, ui->cb_ip->currentText().toLocal8Bit().data(), 64);
+        self.id = ui->sb_vers_2->value();
+        strncpy(self.hostname, ui->cb_ip_2->currentText().toLocal8Bit().data(), 64);
 
-        QString qs = ui->lineEdit_3->text().remove(QRegExp("_"));
+        QString qs = ui->txt_contact_ip->text().remove(QRegExp("_"));
         contact.id = ui->sb_contact_id->value();
         strncpy(contact.hostname, qs.toLocal8Bit().data(), 64);
-        client(self, contact);
+        client_join(self, contact);
     }
 }
 
@@ -125,4 +126,9 @@ void MainWindow::setIP()
             ui->cb_ip->addItem(addr.toString());
             ui->cb_ip_2->addItem(addr.toString());
         }
+}
+
+void MainWindow::on_btn_refresh_clicked()
+{
+
 }

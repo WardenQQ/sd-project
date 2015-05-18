@@ -30,6 +30,8 @@ private slots:
 
     void on_btn_join_cluster_clicked();
 
+    void on_btn_refresh_clicked();
+
 private:
     Ui::MainWindow *ui;
     map_t map;

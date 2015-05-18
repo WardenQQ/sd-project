@@ -11,7 +11,7 @@ int err = 0;
 
 void client_init(server_address_t self, map_t map)
 {
-    pair_with_server(self.id);
+    pair_with_server(self);
 
     enum clnt_stat stat;
     stat = callrpc(self.hostname, PROGNUM, self.id, PROC_SET_MAP,
