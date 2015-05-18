@@ -94,7 +94,7 @@ public:
     QGridLayout *gridLayout;
     QLineEdit *lineEdit_3;
     QLabel *label_16;
-    QSpinBox *spinBox;
+    QSpinBox *sb_contact_id;
     QLabel *label_14;
     QGroupBox *groupBox_7;
     QGridLayout *gridLayout_7;
@@ -138,7 +138,7 @@ public:
         toolBox->setObjectName(QStringLiteral("toolBox"));
         page = new QWidget();
         page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, 0, 449, 581));
+        page->setGeometry(QRect(0, 0, 461, 581));
         verticalLayout_3 = new QVBoxLayout(page);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -414,10 +414,10 @@ public:
 
         gridLayout->addWidget(label_16, 1, 0, 1, 1);
 
-        spinBox = new QSpinBox(groupBox_5);
-        spinBox->setObjectName(QStringLiteral("spinBox"));
+        sb_contact_id = new QSpinBox(groupBox_5);
+        sb_contact_id->setObjectName(QStringLiteral("sb_contact_id"));
 
-        gridLayout->addWidget(spinBox, 0, 1, 1, 1);
+        gridLayout->addWidget(sb_contact_id, 0, 1, 1, 1);
 
         label_14 = new QLabel(groupBox_5);
         label_14->setObjectName(QStringLiteral("label_14"));

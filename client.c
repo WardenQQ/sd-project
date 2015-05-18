@@ -9,16 +9,16 @@ extern "C" {
 
 	int err = 0;
 
-void client_init(int vers, char *ip, map_t map)
+void client_init(server_address_t self, map_t map)
 {
-	pair_with_server(vers);
+    pair_with_server(self.id);
 
-	enum clnt_stat stat;
-    stat = callrpc("localhost", PROGNUM, vers, PROC_SET_MAP,
+    enum clnt_stat stat;
+    stat = callrpc(self.hostname, PROGNUM, self.id, PROC_SET_MAP,
             (xdrproc_t)xdr_map_t, (char *)&map,
             (xdrproc_t)xdr_int, (char *)&err);
 
-    genetic_algorithm(100, map.nb_children, &map, vers);
+    genetic_algorithm(100, map.nb_children, &map, self.id);
 }
 
 void client_join(int vers, char *ip, int contact_vers, char *contact_ip)

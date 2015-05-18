@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <QMainWindow>
+#include <string.h>
 #include "../map.h"
 #include "../genotype.h"
 #include "../population.h"
