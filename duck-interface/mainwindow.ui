@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -308,10 +308,13 @@
                <item row="2" column="1">
                 <widget class="QSpinBox" name="sb_migration">
                  <property name="minimum">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <property name="maximum">
                   <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>1</number>
                  </property>
                 </widget>
                </item>

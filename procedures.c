@@ -34,7 +34,11 @@ int * announce_self(server_address_t *addr)
 
     callrpc(addr->hostname, PROGNUM, addr->id, PROC_GIVE_SERVER_LIST,
             (xdrproc_t)xdr_void, (char *)&ret, (xdrproc_t)xdr_server_list_t, (char *)&list);
-    
+
+    callrpc(addr->hostname, PROGNUM, addr->id, PROC_GET_MAP,
+            (xdrproc_t)xdr_void, NULL,
+            (xdrproc_t)xdr_map_t, (char *)&map);
+
     add_server(addr);
     for (i = 0; i < list.size; i++) {
         callrpc(list.addr[i].hostname, PROGNUM, list.addr[i].id, PROC_ADD_SERVER,
@@ -58,6 +62,7 @@ int * add_server(server_address_t * addr)
 
 map_t * get_map(void *id)
 {
+    fprintf(stderr, "Appel a get_map : %d\n", map.mutation_prob);
     return &(map);
 }
 
@@ -66,6 +71,7 @@ int * set_map(map_t * m)
     static int ret = 0;
 
     map = *m;
+    fprintf(stderr, "Appel a set_map : %d\n", map.mutation_prob);
 
     return &ret;
 }

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "mapwidget.h"
 
 #include <QDialog>
 #include <QVBoxLayout>
@@ -95,27 +94,33 @@ void MainWindow::on_btn_init_cluster_clicked()
     if (fork() == 0) {
         server(ui->sb_vers->value());
     } else {
-        server_address_t self;
-        self.id = ui->sb_vers->value();
-        strncpy(self.hostname, ui->cb_ip->currentText().toLocal8Bit().data(), 64);
+        if (fork() == 0) {
+            server_address_t self;
+            self.id = ui->sb_vers->value();
+            strncpy(self.hostname, ui->cb_ip->currentText().toLocal8Bit().data(), 64);
 
-        client_init(self, map);
+            client_init(self, map);
+            exit(0);
+        }
     }
 }
 
 void MainWindow::on_btn_join_cluster_clicked()
 {
     if (fork() == 0) {
-       server(ui->sb_vers->value());
+       server(ui->sb_vers_2->value());
     } else {
-        server_address_t self, contact;
-        self.id = ui->sb_vers_2->value();
-        strncpy(self.hostname, ui->cb_ip_2->currentText().toLocal8Bit().data(), 64);
-
-        QString qs = ui->txt_contact_ip->text().remove(QRegExp("_"));
-        contact.id = ui->sb_contact_id->value();
-        strncpy(contact.hostname, qs.toLocal8Bit().data(), 64);
-        client_join(self, contact);
+        if (fork() == 0) {
+            server_address_t self, contact;
+            self.id = ui->sb_vers_2->value();
+            strncpy(self.hostname, ui->cb_ip_2->currentText().toLocal8Bit().data(), 64);
+    
+            QString qs = ui->txt_contact_ip->text().remove(QRegExp("_"));
+            strncpy(contact.hostname, qs.toLocal8Bit().data(), 64);
+            contact.id = ui->sb_contact_id->value();
+            client_join(self, contact);
+            exit(0);
+        }
     }
 }
 
@@ -125,10 +130,27 @@ void MainWindow::setIP()
         if ( addr.protocol() == QAbstractSocket::IPv4Protocol && addr != QHostAddress(QHostAddress::LocalHost) ) {
             ui->cb_ip->addItem(addr.toString());
             ui->cb_ip_2->addItem(addr.toString());
+            ui->txt_contact_ip->setText(addr.toString());
+            ui->txt_res_ip->setText(addr.toString());
         }
 }
 
 void MainWindow::on_btn_refresh_clicked()
 {
+    int ret = 0;
+    server_list_t list;
+    server_address_t contact;
+    contact.id = ui->sb_res_id->value();
+    strncpy(contact.hostname, ui->txt_res_ip->text().remove(QRegExp("_")).toLocal8Bit().data(), 64);
 
+    callrpc(contact.hostname, PROGNUM, contact.id, PROC_GIVE_SERVER_LIST,
+            (xdrproc_t)xdr_void, (char *)&ret, (xdrproc_t)xdr_server_list_t, (char *)&list);
+
+    ui->listWidget->clear();
+    for(int i = 0; i < list.size; i++) {
+        QString text = QString(list.addr[i].hostname).append(" \t%0").arg(list.addr[i].id).append(" ");
+        ui->listWidget->addItem(text);
+    }
+    QString text = QString("127.0.0.1").append(" \t%0").arg(contact.id).append(" ");
+    ui->listWidget->addItem(text);
 }

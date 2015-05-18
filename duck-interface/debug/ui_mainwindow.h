@@ -93,7 +93,7 @@ public:
     QGroupBox *groupBox_5;
     QHBoxLayout *horizontalLayout_5;
     QLabel *label_16;
-    QLineEdit *lineEdit_3;
+    QLineEdit *txt_contact_ip;
     QLabel *label_14;
     QSpinBox *sb_contact_id;
     QSpacerItem *horizontalSpacer_3;
@@ -108,7 +108,21 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QSpacerItem *verticalSpacer;
     QWidget *tab2;
+    QVBoxLayout *verticalLayout_5;
+    QGroupBox *groupBox_8;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *label_20;
+    QLineEdit *txt_res_ip;
+    QLabel *label_21;
+    QSpinBox *sb_res_id;
+    QSpacerItem *horizontalSpacer_5;
+    QPushButton *btn_refresh;
     QListWidget *listWidget;
+    QHBoxLayout *horizontalLayout_7;
+    QSpacerItem *horizontalSpacer_7;
+    QPushButton *btn_display_path;
+    QSpacerItem *horizontalSpacer_8;
+    QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
 
@@ -320,8 +334,9 @@ public:
 
         sb_migration = new QSpinBox(groupBox_3);
         sb_migration->setObjectName(QStringLiteral("sb_migration"));
-        sb_migration->setMinimum(0);
+        sb_migration->setMinimum(1);
         sb_migration->setMaximum(100);
+        sb_migration->setValue(1);
 
         gridLayout_4->addWidget(sb_migration, 2, 1, 1, 1);
 
@@ -356,6 +371,7 @@ public:
 
         cb_ip = new QComboBox(groupBox_6);
         cb_ip->setObjectName(QStringLiteral("cb_ip"));
+        cb_ip->setMinimumSize(QSize(150, 0));
 
         horizontalLayout_4->addWidget(cb_ip);
 
@@ -404,10 +420,11 @@ public:
 
         horizontalLayout_5->addWidget(label_16);
 
-        lineEdit_3 = new QLineEdit(groupBox_5);
-        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        txt_contact_ip = new QLineEdit(groupBox_5);
+        txt_contact_ip->setObjectName(QStringLiteral("txt_contact_ip"));
+        txt_contact_ip->setMinimumSize(QSize(150, 0));
 
-        horizontalLayout_5->addWidget(lineEdit_3);
+        horizontalLayout_5->addWidget(txt_contact_ip);
 
         label_14 = new QLabel(groupBox_5);
         label_14->setObjectName(QStringLiteral("label_14"));
@@ -439,6 +456,7 @@ public:
 
         cb_ip_2 = new QComboBox(groupBox_7);
         cb_ip_2->setObjectName(QStringLiteral("cb_ip_2"));
+        cb_ip_2->setMinimumSize(QSize(150, 0));
 
         horizontalLayout_3->addWidget(cb_ip_2);
 
@@ -484,9 +502,79 @@ public:
         tabWidget->addTab(tab, QString());
         tab2 = new QWidget();
         tab2->setObjectName(QStringLiteral("tab2"));
+        verticalLayout_5 = new QVBoxLayout(tab2);
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        groupBox_8 = new QGroupBox(tab2);
+        groupBox_8->setObjectName(QStringLiteral("groupBox_8"));
+        horizontalLayout_6 = new QHBoxLayout(groupBox_8);
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        label_20 = new QLabel(groupBox_8);
+        label_20->setObjectName(QStringLiteral("label_20"));
+
+        horizontalLayout_6->addWidget(label_20);
+
+        txt_res_ip = new QLineEdit(groupBox_8);
+        txt_res_ip->setObjectName(QStringLiteral("txt_res_ip"));
+        txt_res_ip->setMinimumSize(QSize(150, 0));
+
+        horizontalLayout_6->addWidget(txt_res_ip);
+
+        label_21 = new QLabel(groupBox_8);
+        label_21->setObjectName(QStringLiteral("label_21"));
+
+        horizontalLayout_6->addWidget(label_21);
+
+        sb_res_id = new QSpinBox(groupBox_8);
+        sb_res_id->setObjectName(QStringLiteral("sb_res_id"));
+
+        horizontalLayout_6->addWidget(sb_res_id);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_5);
+
+        btn_refresh = new QPushButton(groupBox_8);
+        btn_refresh->setObjectName(QStringLiteral("btn_refresh"));
+
+        horizontalLayout_6->addWidget(btn_refresh);
+
+
+        verticalLayout_5->addWidget(groupBox_8);
+
         listWidget = new QListWidget(tab2);
+        new QListWidgetItem(listWidget);
+        new QListWidgetItem(listWidget);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setGeometry(QRect(90, 50, 256, 192));
+
+        verticalLayout_5->addWidget(listWidget);
+
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_7);
+
+        btn_display_path = new QPushButton(tab2);
+        btn_display_path->setObjectName(QStringLiteral("btn_display_path"));
+
+        horizontalLayout_7->addWidget(btn_display_path);
+
+        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_8);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_7);
+
+        verticalSpacer_2 = new QSpacerItem(20, 275, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_5->addItem(verticalSpacer_2);
+
         tabWidget->addTab(tab2, QString());
 
         verticalLayout_4->addWidget(tabWidget);
@@ -536,8 +624,8 @@ public:
         toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Cr\303\251er un cluster", 0));
         groupBox_5->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
         label_16->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
-        lineEdit_3->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
-        lineEdit_3->setText(QApplication::translate("MainWindow", "127.0.0.1", 0));
+        txt_contact_ip->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
+        txt_contact_ip->setText(QApplication::translate("MainWindow", "127.0.0.1", 0));
         label_14->setText(QApplication::translate("MainWindow", "Identifiant", 0));
         groupBox_7->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
         label_18->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
@@ -545,6 +633,22 @@ public:
         btn_join_cluster->setText(QApplication::translate("MainWindow", "Lancer !", 0));
         toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "Rejoindre un cluster", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Param\303\250tres", 0));
+        groupBox_8->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
+        label_20->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
+        txt_res_ip->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
+        txt_res_ip->setText(QApplication::translate("MainWindow", "127.0.0.1", 0));
+        label_21->setText(QApplication::translate("MainWindow", "Identifiant", 0));
+        btn_refresh->setText(QApplication::translate("MainWindow", "Actualiser", 0));
+
+        const bool __sortingEnabled = listWidget->isSortingEnabled();
+        listWidget->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
+        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "127.0.0.1 \\t 1", 0));
+        QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
+        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "Nouvel \303\251l\303\251ment", 0));
+        listWidget->setSortingEnabled(__sortingEnabled);
+
+        btn_display_path->setText(QApplication::translate("MainWindow", "Afficher le chemin", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab2), QApplication::translate("MainWindow", "Voir les r\303\251sultats", 0));
     } // retranslateUi
 
