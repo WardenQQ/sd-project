@@ -41,6 +41,8 @@ private:
     genotype_t bests[SERVER_LIST_MAX];
     void displayMap();
     void setIP();
+    void setGAParameters();
+    void setMapParameters();
 };
 
 #endif // MAINWINDOW_H
