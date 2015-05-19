@@ -28,8 +28,6 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QToolBox>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -39,13 +37,10 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_4;
+    QGridLayout *gridLayout;
     QTabWidget *tabWidget;
     QWidget *tab;
     QVBoxLayout *verticalLayout_2;
-    QToolBox *toolBox;
-    QWidget *page;
-    QVBoxLayout *verticalLayout_3;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_2;
     QSpinBox *sb_width;
@@ -70,7 +65,7 @@ public:
     QSpacerItem *horizontalSpacer;
     QPushButton *btn_generate_map;
     QSpacerItem *horizontalSpacer_2;
-    QFrame *line_4;
+    QFrame *line;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_4;
     QLabel *label_9;
@@ -79,7 +74,7 @@ public:
     QSpinBox *sb_children;
     QSpinBox *sb_migration;
     QSpinBox *sb_mutation;
-    QFrame *line;
+    QFrame *line_4;
     QGroupBox *groupBox_6;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_17;
@@ -88,25 +83,24 @@ public:
     QSpinBox *sb_vers;
     QSpacerItem *horizontalSpacer_4;
     QPushButton *btn_init_cluster;
-    QWidget *page_2;
-    QVBoxLayout *verticalLayout;
-    QGroupBox *groupBox_5;
-    QHBoxLayout *horizontalLayout_5;
-    QLabel *label_16;
+    QWidget *tab_2;
+    QVBoxLayout *verticalLayout_6;
+    QGroupBox *groupBox_9;
+    QHBoxLayout *horizontalLayout_9;
+    QLabel *label_22;
     QLineEdit *txt_contact_ip;
-    QLabel *label_14;
+    QLabel *label_23;
     QSpinBox *sb_contact_id;
-    QSpacerItem *horizontalSpacer_3;
-    QGroupBox *groupBox_7;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *label_18;
+    QSpacerItem *horizontalSpacer_9;
+    QGroupBox *groupBox_10;
+    QHBoxLayout *horizontalLayout_10;
+    QLabel *label_24;
     QComboBox *cb_ip_2;
-    QLabel *label_19;
+    QLabel *label_25;
     QSpinBox *sb_vers_2;
-    QSpacerItem *horizontalSpacer_6;
+    QSpacerItem *horizontalSpacer_10;
     QPushButton *btn_join_cluster;
-    QHBoxLayout *horizontalLayout_2;
-    QSpacerItem *verticalSpacer;
+    QSpacerItem *verticalSpacer_3;
     QWidget *tab2;
     QVBoxLayout *verticalLayout_5;
     QGroupBox *groupBox_8;
@@ -124,13 +118,12 @@ public:
     QSpacerItem *horizontalSpacer_8;
     QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
-    QToolBar *mainToolBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(576, 750);
+        MainWindow->resize(558, 686);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -138,10 +131,10 @@ public:
         MainWindow->setSizePolicy(sizePolicy);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout_4 = new QVBoxLayout(centralWidget);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         tab = new QWidget();
@@ -150,16 +143,7 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        toolBox = new QToolBox(tab);
-        toolBox->setObjectName(QStringLiteral("toolBox"));
-        page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
-        page->setGeometry(QRect(0, 0, 536, 565));
-        verticalLayout_3 = new QVBoxLayout(page);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        groupBox = new QGroupBox(page);
+        groupBox = new QGroupBox(tab);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         gridLayout_2 = new QGridLayout(groupBox);
         gridLayout_2->setSpacing(6);
@@ -219,9 +203,9 @@ public:
         gridLayout_2->addWidget(label_11, 1, 0, 1, 1);
 
 
-        verticalLayout_3->addWidget(groupBox);
+        verticalLayout_2->addWidget(groupBox);
 
-        groupBox_2 = new QGroupBox(page);
+        groupBox_2 = new QGroupBox(tab);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         gridLayout_3 = new QGridLayout(groupBox_2);
         gridLayout_3->setSpacing(6);
@@ -275,7 +259,7 @@ public:
         gridLayout_3->addWidget(sb_goals, 1, 4, 1, 1);
 
 
-        verticalLayout_3->addWidget(groupBox_2);
+        verticalLayout_2->addWidget(groupBox_2);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
@@ -284,7 +268,7 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        btn_generate_map = new QPushButton(page);
+        btn_generate_map = new QPushButton(tab);
         btn_generate_map->setObjectName(QStringLiteral("btn_generate_map"));
 
         horizontalLayout->addWidget(btn_generate_map);
@@ -294,16 +278,16 @@ public:
         horizontalLayout->addItem(horizontalSpacer_2);
 
 
-        verticalLayout_3->addLayout(horizontalLayout);
+        verticalLayout_2->addLayout(horizontalLayout);
 
-        line_4 = new QFrame(page);
-        line_4->setObjectName(QStringLiteral("line_4"));
-        line_4->setFrameShape(QFrame::HLine);
-        line_4->setFrameShadow(QFrame::Sunken);
+        line = new QFrame(tab);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
 
-        verticalLayout_3->addWidget(line_4);
+        verticalLayout_2->addWidget(line);
 
-        groupBox_3 = new QGroupBox(page);
+        groupBox_3 = new QGroupBox(tab);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
         gridLayout_4 = new QGridLayout(groupBox_3);
         gridLayout_4->setSpacing(6);
@@ -349,16 +333,16 @@ public:
         gridLayout_4->addWidget(sb_mutation, 0, 1, 1, 1);
 
 
-        verticalLayout_3->addWidget(groupBox_3);
+        verticalLayout_2->addWidget(groupBox_3);
 
-        line = new QFrame(page);
-        line->setObjectName(QStringLiteral("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
+        line_4 = new QFrame(tab);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
 
-        verticalLayout_3->addWidget(line);
+        verticalLayout_2->addWidget(line_4);
 
-        groupBox_6 = new QGroupBox(page);
+        groupBox_6 = new QGroupBox(tab);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         horizontalLayout_4 = new QHBoxLayout(groupBox_6);
         horizontalLayout_4->setSpacing(6);
@@ -399,107 +383,94 @@ public:
         horizontalLayout_4->addWidget(btn_init_cluster);
 
 
-        verticalLayout_3->addWidget(groupBox_6);
+        verticalLayout_2->addWidget(groupBox_6);
 
-        toolBox->addItem(page, QString::fromUtf8("Cr\303\251er un cluster"));
-        page_2 = new QWidget();
-        page_2->setObjectName(QStringLiteral("page_2"));
-        page_2->setGeometry(QRect(0, 0, 536, 565));
-        verticalLayout = new QVBoxLayout(page_2);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        groupBox_5 = new QGroupBox(page_2);
-        groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
-        horizontalLayout_5 = new QHBoxLayout(groupBox_5);
-        horizontalLayout_5->setSpacing(6);
-        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        label_16 = new QLabel(groupBox_5);
-        label_16->setObjectName(QStringLiteral("label_16"));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        verticalLayout_6 = new QVBoxLayout(tab_2);
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        groupBox_9 = new QGroupBox(tab_2);
+        groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
+        horizontalLayout_9 = new QHBoxLayout(groupBox_9);
+        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
+        label_22 = new QLabel(groupBox_9);
+        label_22->setObjectName(QStringLiteral("label_22"));
 
-        horizontalLayout_5->addWidget(label_16);
+        horizontalLayout_9->addWidget(label_22);
 
-        txt_contact_ip = new QLineEdit(groupBox_5);
+        txt_contact_ip = new QLineEdit(groupBox_9);
         txt_contact_ip->setObjectName(QStringLiteral("txt_contact_ip"));
         txt_contact_ip->setMinimumSize(QSize(150, 0));
 
-        horizontalLayout_5->addWidget(txt_contact_ip);
+        horizontalLayout_9->addWidget(txt_contact_ip);
 
-        label_14 = new QLabel(groupBox_5);
-        label_14->setObjectName(QStringLiteral("label_14"));
+        label_23 = new QLabel(groupBox_9);
+        label_23->setObjectName(QStringLiteral("label_23"));
 
-        horizontalLayout_5->addWidget(label_14);
+        horizontalLayout_9->addWidget(label_23);
 
-        sb_contact_id = new QSpinBox(groupBox_5);
+        sb_contact_id = new QSpinBox(groupBox_9);
         sb_contact_id->setObjectName(QStringLiteral("sb_contact_id"));
 
-        horizontalLayout_5->addWidget(sb_contact_id);
+        horizontalLayout_9->addWidget(sb_contact_id);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_5->addItem(horizontalSpacer_3);
+        horizontalLayout_9->addItem(horizontalSpacer_9);
 
 
-        verticalLayout->addWidget(groupBox_5);
+        verticalLayout_6->addWidget(groupBox_9);
 
-        groupBox_7 = new QGroupBox(page_2);
-        groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
-        horizontalLayout_3 = new QHBoxLayout(groupBox_7);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        label_18 = new QLabel(groupBox_7);
-        label_18->setObjectName(QStringLiteral("label_18"));
+        groupBox_10 = new QGroupBox(tab_2);
+        groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
+        horizontalLayout_10 = new QHBoxLayout(groupBox_10);
+        horizontalLayout_10->setSpacing(6);
+        horizontalLayout_10->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        label_24 = new QLabel(groupBox_10);
+        label_24->setObjectName(QStringLiteral("label_24"));
 
-        horizontalLayout_3->addWidget(label_18);
+        horizontalLayout_10->addWidget(label_24);
 
-        cb_ip_2 = new QComboBox(groupBox_7);
+        cb_ip_2 = new QComboBox(groupBox_10);
         cb_ip_2->setObjectName(QStringLiteral("cb_ip_2"));
         cb_ip_2->setMinimumSize(QSize(150, 0));
 
-        horizontalLayout_3->addWidget(cb_ip_2);
+        horizontalLayout_10->addWidget(cb_ip_2);
 
-        label_19 = new QLabel(groupBox_7);
-        label_19->setObjectName(QStringLiteral("label_19"));
+        label_25 = new QLabel(groupBox_10);
+        label_25->setObjectName(QStringLiteral("label_25"));
 
-        horizontalLayout_3->addWidget(label_19);
+        horizontalLayout_10->addWidget(label_25);
 
-        sb_vers_2 = new QSpinBox(groupBox_7);
+        sb_vers_2 = new QSpinBox(groupBox_10);
         sb_vers_2->setObjectName(QStringLiteral("sb_vers_2"));
 
-        horizontalLayout_3->addWidget(sb_vers_2);
+        horizontalLayout_10->addWidget(sb_vers_2);
 
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_6);
+        horizontalLayout_10->addItem(horizontalSpacer_10);
 
-        btn_join_cluster = new QPushButton(groupBox_7);
+        btn_join_cluster = new QPushButton(groupBox_10);
         btn_join_cluster->setObjectName(QStringLiteral("btn_join_cluster"));
         btn_join_cluster->setFont(font);
 
-        horizontalLayout_3->addWidget(btn_join_cluster);
+        horizontalLayout_10->addWidget(btn_join_cluster);
 
 
-        verticalLayout->addWidget(groupBox_7);
+        verticalLayout_6->addWidget(groupBox_10);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        verticalSpacer_3 = new QSpacerItem(20, 435, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_6->addItem(verticalSpacer_3);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout->addItem(verticalSpacer);
-
-        toolBox->addItem(page_2, QStringLiteral("Rejoindre un cluster"));
-        groupBox_5->raise();
-        groupBox_7->raise();
-
-        verticalLayout_2->addWidget(toolBox);
-
-        tabWidget->addTab(tab, QString());
+        tabWidget->addTab(tab_2, QString());
         tab2 = new QWidget();
         tab2->setObjectName(QStringLiteral("tab2"));
         verticalLayout_5 = new QVBoxLayout(tab2);
@@ -576,21 +547,17 @@ public:
 
         tabWidget->addTab(tab2, QString());
 
-        verticalLayout_4->addWidget(tabWidget);
+        gridLayout->addWidget(tabWidget, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 576, 29));
+        menuBar->setGeometry(QRect(0, 0, 558, 29));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
-        toolBox->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -620,18 +587,17 @@ public:
         label_17->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         label_15->setText(QApplication::translate("MainWindow", "Identifiant", 0));
         btn_init_cluster->setText(QApplication::translate("MainWindow", "Lancer !", 0));
-        toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("MainWindow", "Cr\303\251er un cluster", 0));
-        groupBox_5->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
-        label_16->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Cr\303\251er un cluster", 0));
+        groupBox_9->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
+        label_22->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         txt_contact_ip->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
         txt_contact_ip->setText(QApplication::translate("MainWindow", "127.0.0.1", 0));
-        label_14->setText(QApplication::translate("MainWindow", "Identifiant", 0));
-        groupBox_7->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
-        label_18->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
-        label_19->setText(QApplication::translate("MainWindow", "Identifiant", 0));
+        label_23->setText(QApplication::translate("MainWindow", "Identifiant", 0));
+        groupBox_10->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
+        label_24->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
+        label_25->setText(QApplication::translate("MainWindow", "Identifiant", 0));
         btn_join_cluster->setText(QApplication::translate("MainWindow", "Lancer !", 0));
-        toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("MainWindow", "Rejoindre un cluster", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Param\303\250tres", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "Rejoindre un cluster", 0));
         groupBox_8->setTitle(QApplication::translate("MainWindow", "N\305\223ud \303\240 contacter", 0));
         label_20->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         txt_res_ip->setInputMask(QApplication::translate("MainWindow", "000.000.000.000;_", 0));
