@@ -24,7 +24,7 @@ typedef struct {
     int direction;
 } gene_t;
 
-gene_t random_gene();
+gene_t random_gene(int min_step, int max_step);
 
 #ifdef __cplusplus
 }

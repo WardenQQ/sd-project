@@ -1,4 +1,5 @@
 #include "genotype.h"
+#include "map.h"
 #include <math.h>
 
 #ifdef __cplusplus
@@ -22,12 +23,12 @@ int compare_genotype(const void *genotype1, const void *genotype2)
     }
 }
 
-void random_genotype(genotype_t *out)
+void random_genotype(genotype_t *out, int min_step, int max_step)
 {
     int i;
 
     for (i = 0; i < GENOTYPE_SIZE; i++) {
-        out->genes[i] = random_gene();
+        out->genes[i] = random_gene(min_step, max_step);
     }
 }
 
@@ -50,7 +51,7 @@ void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2)
     }
 }
 
-void mutate(genotype_t *in_out, int probability)
+void mutate(genotype_t *in_out, int probability, int min_step, int max_step)
 {
     int p, i;
 
@@ -58,7 +59,7 @@ void mutate(genotype_t *in_out, int probability)
         p = rand() % MAX_PROBABILITY;
 
         if (p < probability) {
-            in_out->genes[i] = random_gene();
+            in_out->genes[i] = random_gene(min_step, max_step);
         }
     }
 }

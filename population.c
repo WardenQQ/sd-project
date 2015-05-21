@@ -8,6 +8,27 @@
 extern "C" {
 #endif
 
+void roulette_select(population_t *pop, genotype_t *out)
+{
+    int i = 0;
+    double limit = 0;
+    for (i = 0; i < REDUCED_POPULATION_SIZE; i++) {
+        limit += pop->genotypes[i].fitness;
+    }
+    double dice = drand48() * limit;
+
+    limit = 0;
+    for (i = 0; i < REDUCED_POPULATION_SIZE; i++) {
+        limit += pop->genotypes[i].fitness;
+        if (dice < limit) {
+            *out = pop->genotypes[i];
+            return;
+        }
+    }
+
+    return pop->genotypes[REDUCED_POPULATION_SIZE - 1];
+}
+
 
 genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t addr)
 {
@@ -20,11 +41,31 @@ genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t add
             emigrate(pop, addr);
         }
 
-        for (j = 0; j < map->nb_children; j++) {
-            tournament_select(&parent1, &parent2, pop, 3);
+        for (j = 0; j < 70; j++) {
+            //tournament_select(&parent1, &parent2, pop, 5);
+            roulette_select(pop, &parent1);
+            roulette_select(pop, &parent2);
             crossover(&child, &parent1, &parent2);
-            mutate(&child, map->mutation_prob);
+            //mutate(&child, map->mutation_prob);
             evaluate(&child, map);
+            add_to_population(pop, &child);
+        }
+
+        for (j = 0; j < 10; j++) {
+            //tournament_select(&child, &parent2, pop, 5);
+            roulette_select(pop, &child);
+            //crossover(&child, &parent1, &parent2);
+            mutate(&child, map->mutation_prob, map->min_step, map->max_step);
+            evaluate(&child, map);
+            add_to_population(pop, &child);
+        }
+
+        for (j = 0; j < 7; j++) {
+            //tournament_select(&child, &parent2, pop, 5);
+            roulette_select(pop, &child);
+            //crossover(&child, &parent1, &parent2);
+            //mutate(&child, map->mutation_prob);
+            //evaluate(&child, map);
             add_to_population(pop, &child);
         }
 
@@ -44,7 +85,7 @@ void init_population(population_t *out, map_t *map)
 
     out->size = REDUCED_POPULATION_SIZE;
     for (i = 0; i < REDUCED_POPULATION_SIZE; i++) {
-        random_genotype(&(out->genotypes[i]));
+        random_genotype(&(out->genotypes[i]), map->min_step, map->max_step);
         evaluate(&(out->genotypes[i]), map);
     }
 

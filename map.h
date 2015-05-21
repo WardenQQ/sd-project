@@ -60,6 +60,15 @@ int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reache
 
 int in_boundary(map_t * map, map_object_t pos);
 
+typedef struct collision_info {
+    int block;
+    int nb_goals;
+    unsigned long goal;
+} collision_info_t;
+
+map_object_t move(map_object_t pos, int dir);
+collision_info_t look(map_t *map, unsigned long reached_goals, map_object_t pos);
+
 #ifdef __cplusplus
 }
 #endif

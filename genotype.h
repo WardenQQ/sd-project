@@ -18,11 +18,11 @@ typedef struct {
 
 int compare_genotype(const void *g1, const void *g2);
 
-void random_genotype(genotype_t *out);
+void random_genotype(genotype_t *out, int min_step, int max_step);
 
 void crossover(genotype_t *out, genotype_t *parent1, genotype_t *parent2);
 
-void mutate(genotype_t *in_out, int probability);
+void mutate(genotype_t *in_out, int probability, int min_step, int max_step);
 
 #ifdef __cplusplus
 }
