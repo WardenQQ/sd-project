@@ -7,4 +7,4 @@ client
 
 *.pro.user*
 
-duck-interface/debug/
+duck-interface/debug/*

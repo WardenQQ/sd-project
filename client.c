@@ -22,6 +22,7 @@ void client_init(server_address_t self, map_t map)
             (xdrproc_t)xdr_map_t, (char *)&map,
             (xdrproc_t)xdr_int, (char *)&err);
 
+    srand(time(NULL));
     init_population(&pop, &map);
     emigrate(&pop, self);
 
@@ -45,10 +46,10 @@ void client_join(server_address_t self, server_address_t contact)
             (xdrproc_t)xdr_void, NULL,
             (xdrproc_t)xdr_map_t, (char *)&map);
 
+    srand(time(NULL));
     init_population(&pop, &map);
     emigrate(&pop, self);
 
-    srand(time(NULL));
     genetic_algorithm(&map, &pop, self);
 }
 

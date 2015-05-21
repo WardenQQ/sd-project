@@ -115,42 +115,111 @@ int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reache
     return fitness;
 }
 
-void evaluate(genotype_t *genotype, map_t *map)
-{
-    int i;
-    map_object_t pos = map->start_pos;
-    unsigned long reached_goals = 0;
-
-    genotype->fitness = 0;
-    for (i = 0; i < GENOTYPE_SIZE; i++) {
-        genotype->fitness += evaluate_gene(genotype->genes[i], &pos, map, &reached_goals);
-    }
-
-    if (pow(2, map->nb_goals) - 1 == reached_goals) {
-        double sum;
-        for (i = 0; i < GENOTYPE_SIZE; i++) {
-            sum += genotype->genes[i].step;
-        }
-        genotype->fitness += (GENOTYPE_SIZE * map->max_step - sum) / (GENOTYPE_SIZE * map->max_step - GENOTYPE_SIZE * map->min_step);
-    } else {
-        double maxdist = map->width * map->width + map->height * map->height;
-        double mindist = maxdist;
-
-        for (i = 0; i < map->nb_goals; i++) {
-            if (!((reached_goals >> i) & 1)) {
-                double dist = squared_distance(pos, map->goals[i]);
-                mindist = dist < mindist ? dist : mindist;
-            }
-        }
-
-        genotype->fitness += (maxdist - mindist) / maxdist;
-    }
-}
-
 int in_boundary(map_t * map, map_object_t pos)
 {
     return pos.x >= pos.radius && pos.x < map->width - pos.radius && pos.y >= pos.radius && pos.y < map->height-pos.radius;
 }
+
+collision_info_t look(map_t *map, unsigned long reached_goals, map_object_t pos)
+{
+    int i;
+    collision_info_t info;
+    info.block = 0;
+    info.goal = 0;
+    info.nb_goals = 0;
+
+    if (!in_boundary(map, pos)) {
+        info.block = 1;
+        return info;
+    }
+
+    for (i = 0; i < map->nb_blocks; i++) {
+        if (collides_with(pos, map->blocks[i])) {
+            info.block = 1;
+            return info;
+        }
+    }
+
+    for (i = 0; i < map->nb_goals; i++) {
+        if (((reached_goals >> i) & 1) == 0 && collides_with(pos, map->goals[i])) {
+            info.goal |= 1 << i;
+            info.nb_goals++;
+        }
+    }
+
+    return info;
+}
+
+map_object_t move(map_object_t pos, int dir)
+{
+    map_object_t res = pos;
+
+    if (NORTH_EAST <= dir && dir <= SOUTH_EAST)
+        res.x+=1;
+
+    if (SOUTH_EAST <= dir && dir <= SOUTH_WEST )
+        res.y+=1;
+
+    if (SOUTH_WEST <= dir && dir <= NORTH_WEST )
+        res.x-=1;
+
+    if (dir == NORTH_WEST || dir == NORTH || dir == NORTH_EAST)
+        res.y-=1;
+
+    return res;
+}
+
+double closest_objective(map_t *map, unsigned long reached_goals, map_object_t pos)
+{
+    double mindist = DBL_MAX;
+    int i;
+
+    for (i = 0; i < map->nb_goals; i++) {
+        if (((reached_goals >> i) & 1) == 0 && squared_distance(pos, map->goals[i]) < mindist) {
+            mindist = squared_distance(pos, map->goals[i]);
+        }
+            
+    }
+
+    return mindist;
+}
+
+
+void evaluate(genotype_t *genotype, map_t *map)
+{
+    int i, j;
+    unsigned long reached_goals = 0;
+    int remaining_goals = map->nb_goals;
+    double map_diagonal_dist = (map->width * map->width + map->height * map->height);
+    collision_info_t collision;
+    map_object_t pos = map->start_pos,
+                 new_pos;
+    double closest = closest_objective(map, reached_goals, pos),
+           new_closest;
+    int dist = 0,
+        maxdist = GENOTYPE_SIZE * map->max_step;
+    genotype->fitness = 0;
+    for (i = 0; i < GENOTYPE_SIZE; i++) {
+        for (j =0; j < genotype->genes[i].step; j++) {
+            dist++;
+            new_pos = move(pos, genotype->genes[i].direction);
+            collision = look(map, reached_goals, pos);
+            if (!(collision.block)) {
+                pos = new_pos;
+                if (collision.nb_goals) {
+                    genotype->fitness += collision.nb_goals * pow(2, remaining_goals) * (1 + (double)(maxdist - dist) / maxdist);
+                    remaining_goals--;
+                    reached_goals |= collision.goal;
+                }
+            }
+        }
+    }
+    if (remaining_goals != 0) {
+        closest = closest_objective(map, reached_goals, pos);
+        genotype->fitness += (map_diagonal_dist - closest) / (map_diagonal_dist);
+    }
+}
+
 
 
 #ifdef __cplusplus

@@ -34,6 +34,12 @@ typedef struct {
     int migration_freq;
 } map_t;
 
+typedef struct collision_info {
+    int block;
+    int nb_goals;
+    unsigned long goal;
+} collision_info_t;
+
 void random_map(map_t *out);
 
 int is_not_enough_space(map_t *map, map_object_t obj);
@@ -49,6 +55,12 @@ void evaluate(genotype_t *genotype, map_t *map);
 int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reached_goals);
 
 int in_boundary(map_t * map, map_object_t pos);
+
+map_object_t move(map_object_t pos, int dir);
+
+double closest_objective(map_t *map, unsigned long reached_goals, map_object_t pos);
+
+collision_info_t look(map_t *map, unsigned long reached_goals, map_object_t pos);
 
 #ifdef __cplusplus
 }

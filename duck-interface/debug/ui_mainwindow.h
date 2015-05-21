@@ -112,10 +112,6 @@ public:
     QSpacerItem *horizontalSpacer_5;
     QPushButton *btn_refresh;
     QListWidget *listWidget;
-    QHBoxLayout *horizontalLayout_7;
-    QSpacerItem *horizontalSpacer_7;
-    QPushButton *btn_display_path;
-    QSpacerItem *horizontalSpacer_8;
     QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
 
@@ -161,8 +157,8 @@ public:
         sb_stepMax = new QSpinBox(groupBox);
         sb_stepMax->setObjectName(QStringLiteral("sb_stepMax"));
         sb_stepMax->setMinimum(1);
-        sb_stepMax->setMaximum(100);
-        sb_stepMax->setValue(10);
+        sb_stepMax->setMaximum(128);
+        sb_stepMax->setValue(64);
 
         gridLayout_2->addWidget(sb_stepMax, 1, 6, 1, 1);
 
@@ -218,8 +214,9 @@ public:
 
         sb_radius_max = new QSpinBox(groupBox_2);
         sb_radius_max->setObjectName(QStringLiteral("sb_radius_max"));
-        sb_radius_max->setMinimum(10);
-        sb_radius_max->setMaximum(100);
+        sb_radius_max->setMinimum(8);
+        sb_radius_max->setMaximum(128);
+        sb_radius_max->setValue(96);
 
         gridLayout_3->addWidget(sb_radius_max, 0, 4, 1, 1);
 
@@ -230,7 +227,8 @@ public:
 
         sb_blocks = new QSpinBox(groupBox_2);
         sb_blocks->setObjectName(QStringLiteral("sb_blocks"));
-        sb_blocks->setMaximum(32);
+        sb_blocks->setMaximum(16);
+        sb_blocks->setValue(8);
 
         gridLayout_3->addWidget(sb_blocks, 1, 1, 1, 1);
 
@@ -246,15 +244,17 @@ public:
 
         sb_radius_min = new QSpinBox(groupBox_2);
         sb_radius_min->setObjectName(QStringLiteral("sb_radius_min"));
-        sb_radius_min->setMinimum(10);
-        sb_radius_min->setMaximum(100);
+        sb_radius_min->setMinimum(8);
+        sb_radius_min->setMaximum(128);
+        sb_radius_min->setValue(8);
 
         gridLayout_3->addWidget(sb_radius_min, 0, 1, 1, 1);
 
         sb_goals = new QSpinBox(groupBox_2);
         sb_goals->setObjectName(QStringLiteral("sb_goals"));
         sb_goals->setMinimum(1);
-        sb_goals->setMaximum(32);
+        sb_goals->setMaximum(16);
+        sb_goals->setValue(4);
 
         gridLayout_3->addWidget(sb_goals, 1, 4, 1, 1);
 
@@ -311,8 +311,8 @@ public:
         sb_children = new QSpinBox(groupBox_3);
         sb_children->setObjectName(QStringLiteral("sb_children"));
         sb_children->setMinimum(1);
-        sb_children->setMaximum(100);
-        sb_children->setValue(50);
+        sb_children->setMaximum(90);
+        sb_children->setValue(70);
 
         gridLayout_4->addWidget(sb_children, 1, 1, 1, 1);
 
@@ -320,7 +320,7 @@ public:
         sb_migration->setObjectName(QStringLiteral("sb_migration"));
         sb_migration->setMinimum(1);
         sb_migration->setMaximum(100);
-        sb_migration->setValue(1);
+        sb_migration->setValue(10);
 
         gridLayout_4->addWidget(sb_migration, 2, 1, 1, 1);
 
@@ -328,7 +328,7 @@ public:
         sb_mutation->setObjectName(QStringLiteral("sb_mutation"));
         sb_mutation->setMinimum(1);
         sb_mutation->setMaximum(100);
-        sb_mutation->setValue(3);
+        sb_mutation->setValue(10);
 
         gridLayout_4->addWidget(sb_mutation, 0, 1, 1, 1);
 
@@ -519,27 +519,9 @@ public:
         listWidget = new QListWidget(tab2);
         new QListWidgetItem(listWidget);
         listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setEnabled(false);
 
         verticalLayout_5->addWidget(listWidget);
-
-        horizontalLayout_7 = new QHBoxLayout();
-        horizontalLayout_7->setSpacing(6);
-        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
-        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_7->addItem(horizontalSpacer_7);
-
-        btn_display_path = new QPushButton(tab2);
-        btn_display_path->setObjectName(QStringLiteral("btn_display_path"));
-
-        horizontalLayout_7->addWidget(btn_display_path);
-
-        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_7->addItem(horizontalSpacer_8);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_7);
 
         verticalSpacer_2 = new QSpacerItem(20, 275, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -557,7 +539,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -611,7 +593,6 @@ public:
         ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "Veuillez actualiser pour voir les r\303\251sultats", 0));
         listWidget->setSortingEnabled(__sortingEnabled);
 
-        btn_display_path->setText(QApplication::translate("MainWindow", "Afficher le chemin", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab2), QApplication::translate("MainWindow", "Voir les r\303\251sultats", 0));
     } // retranslateUi
 
