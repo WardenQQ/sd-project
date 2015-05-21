@@ -63,58 +63,6 @@ double squared_distance(map_object_t obj1, map_object_t obj2)
     return (obj1.x - obj2.x) * (obj1.x - obj2.x) + (obj1.y - obj2.y) * (obj1.y - obj2.y);
 }
 
-map_object_t compute_position(map_object_t pos, int dir)
-{
-    map_object_t res = pos;
-
-    if (NORTH_EAST <= dir && dir <= SOUTH_EAST)
-        res.x+=1;
-
-    if (SOUTH_EAST <= dir && dir <= SOUTH_WEST )
-        res.y+=1;
-
-    if (SOUTH_WEST <= dir && dir <= NORTH_WEST )
-        res.x-=1;
-
-    if (dir == NORTH_WEST || dir == NORTH || dir == NORTH_EAST)
-        res.y-=1;
-
-    return res;
-}
-
-int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reached_goals)
-{
-    map_object_t new_pos;
-    int fitness = 0, i, j;
-
-    for (i = 0; i < g.step; i++) {
-        new_pos = compute_position(*pos, g.direction);
-
-        if (!in_boundary(map, new_pos)) {
-            return fitness;
-        } 
-
-        /* We first iterate over obstacles */
-        for (j = 0; j < map->nb_blocks; j++) {
-            if (collides_with(new_pos, map->blocks[j])) {
-                return fitness;
-            }
-        }
-
-        /* then over objectives. */
-        for (j = 0;j < map->nb_goals; j++) {
-            if (!((*reached_goals >> j) & 1) && collides_with(new_pos, map->goals[j])) {
-                fitness += (map->max_radius - new_pos.radius) / (map->max_radius - map->min_radius);
-                *reached_goals |= 1 << j;
-            }
-        }
-
-        *pos = new_pos;
-    }
-
-    return fitness;
-}
-
 int in_boundary(map_t * map, map_object_t pos)
 {
     return pos.x >= pos.radius && pos.x < map->width - pos.radius && pos.y >= pos.radius && pos.y < map->height-pos.radius;
@@ -150,7 +98,7 @@ collision_info_t look(map_t *map, unsigned long reached_goals, map_object_t pos)
     return info;
 }
 
-map_object_t move(map_object_t pos, int dir)
+map_object_t step_once(map_object_t pos, int dir)
 {
     map_object_t res = pos;
 
@@ -202,7 +150,7 @@ void evaluate(genotype_t *genotype, map_t *map)
     for (i = 0; i < GENOTYPE_SIZE; i++) {
         for (j =0; j < genotype->genes[i].step; j++) {
             dist++;
-            new_pos = move(pos, genotype->genes[i].direction);
+            new_pos = step_once(pos, genotype->genes[i].direction);
             collision = look(map, reached_goals, pos);
             if (!(collision.block)) {
                 pos = new_pos;

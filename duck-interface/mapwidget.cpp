@@ -33,6 +33,7 @@ void MapWidget::startPaintingPath(genotype_t &path, int refresh_interval)
     idx_in_gene = 0;
     idx_in_genotype = 0;
     pos = map.start_pos;
+    reached_goals = 0;
     timer->start(refresh_interval);
 }
 
@@ -74,8 +75,13 @@ void MapWidget::displayMap(QPainter &painter)
         painter.drawEllipse(x, y, r*2, r*2);
     }
 
-    painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
     for (int i = 0; i < map.nb_goals; i++) {
+        if ((reached_goals >> i) & 1) {
+            painter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
+        } else {
+            painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
+        }
+
         r = map.goals[i].radius;
         x = map.goals[i].x - r;
         y = map.goals[i].y - r;
@@ -91,16 +97,30 @@ void MapWidget::displayMap(QPainter &painter)
 
 void MapWidget::displayPath(QPainter &painter)
 {
-    int i;
+    int i, j;
     map_object_t pos = map.start_pos;
-    unsigned long reached_goals;
+    map_object_t new_pos;
+    unsigned long reached_goals = 0;
+    unsigned long all_reached = pow(2, map.nb_goals) - 1;
+    collision_info_t col;
 
     QPainterPath q_path;
     q_path.moveTo(pos.x, pos.y);
     painter.setBrush(QBrush());
 
-    for (i = 0; i < GENOTYPE_SIZE; i++) {
-        evaluate_gene(path.genes[i], &pos, &map, &reached_goals);
+    for (i = 0; i < GENOTYPE_SIZE && reached_goals != all_reached; i++) {
+        col.block = 0;
+
+        for (j = 0; j < path.genes[i].step  && !(col.block) && reached_goals != all_reached; j++) {
+            new_pos = step_once(pos, path.genes[i].direction);
+            col = look(&map, reached_goals, new_pos);
+
+            if (!col.block) {
+                pos = new_pos;
+                reached_goals |= col.goal;
+            }
+        }
+
         q_path.lineTo(pos.x, pos.y);
     }
 
@@ -110,7 +130,7 @@ void MapWidget::displayPath(QPainter &painter)
 void MapWidget::paintStep(QPainter &painter)
 {
     int r, x, y;
-    painter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
+    painter.setBrush(QBrush(QColor(255, 175, 0), Qt::SolidPattern));
     r = pos.radius;
     x = pos.x - r;
     y = pos.y - r;
@@ -119,29 +139,25 @@ void MapWidget::paintStep(QPainter &painter)
 
 void MapWidget::updatePosition()
 {
-    if (idx_in_gene < path.genes[idx_in_genotype].step) {
-        idx_in_gene++;
-    } else {
-        if (idx_in_genotype < GENOTYPE_SIZE) {
+    if (idx_in_genotype < GENOTYPE_SIZE && reached_goals != pow(2, map.nb_goals) - 1) {
+        if (idx_in_gene < path.genes[idx_in_genotype].step) {
+            map_object_t new_pos = step_once(pos, path.genes[idx_in_genotype].direction);
+            collision_info_t col = look(&map, reached_goals, pos);
+
+            if (!col.block) {
+                pos = new_pos;
+                reached_goals |= col.goal;
+            }
+
+            idx_in_gene++;
+        } else {
             idx_in_genotype++;
             idx_in_gene = 0;
-        } else {
-            finishPaintingPath();
         }
+    } else {
+        finishPaintingPath();
     }
 
-
-    map_object_t new_pos = compute_position(pos, path.genes[idx_in_genotype].direction);
-
-    if (!in_boundary(&map, new_pos)) {
-        return;
-    }
-    for (int j = 0; j < map.nb_blocks; j++) {
-        if (collides_with(new_pos, map.blocks[j])) {
-            return;
-        }
-    }
-    pos = new_pos;
 }
 
 void showPathDialog(map_t &map, genotype_t &path, QWidget *parent)

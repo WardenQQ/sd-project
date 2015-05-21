@@ -36,6 +36,7 @@ private:
     int idx_in_genotype;
     int idx_in_gene;
     map_object_t pos;
+    unsigned long reached_goals;
 
     bool has_path;
 

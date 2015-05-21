@@ -48,15 +48,11 @@ int collides_with(map_object_t obj1, map_object_t obj2);
 
 double squared_distance(map_object_t obj1, map_object_t obj2);
 
-map_object_t compute_position(map_object_t pos, int dir);
-
 void evaluate(genotype_t *genotype, map_t *map);
-
-int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reached_goals);
 
 int in_boundary(map_t * map, map_object_t pos);
 
-map_object_t move(map_object_t pos, int dir);
+map_object_t step_once(map_object_t pos, int dir);
 
 double closest_objective(map_t *map, unsigned long reached_goals, map_object_t pos);
 
