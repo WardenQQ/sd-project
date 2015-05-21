@@ -16,21 +16,37 @@ class MapWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MapWidget(map_t *map, genotype_t *path = NULL, QWidget *parent = 0);
+    explicit MapWidget(map_t &map, QWidget *parent = 0);
     ~MapWidget();
-    void popUp();
-    static void popUpMap(map_t *map);
-    static void popUpPath(map_t *map, genotype_t g);
+    void startPaintingPath(genotype_t &path, int refresh_interval);
+    void finishPaintingPath();
+
+public slots:
+    void animate();
 
 protected:
     void paintEvent(QPaintEvent *event);
 
 private:
     Ui::MapWidget *ui;
-    map_t *map;
-    genotype_t *path;
-    void displayMap();
-    void displayPath();
+    QTimer *timer;
+
+    map_t map;
+    genotype_t path;
+    int idx_in_genotype;
+    int idx_in_gene;
+    map_object_t pos;
+
+    bool has_path;
+
+    void displayMap(QPainter &painter);
+    void displayPath(QPainter &painter);
+    void paintStep(QPainter &painter);
+    void updatePosition();
 };
+
+void showMapDialog(map_t &map, QWidget *parent = 0);
+
+void showPathDialog(map_t &map, genotype_t &path, QWidget *parent = 0);
 
 #endif // MAPWIDGET_H

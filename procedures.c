@@ -62,7 +62,6 @@ int * add_server(server_address_t * addr)
 
 map_t * get_map(void *id)
 {
-    fprintf(stderr, "Appel a get_map : %d\n", map.mutation_prob);
     return &(map);
 }
 
@@ -71,7 +70,6 @@ int * set_map(map_t * m)
     static int ret = 0;
 
     map = *m;
-    fprintf(stderr, "Appel a set_map : %d\n", map.mutation_prob);
 
     return &ret;
 }

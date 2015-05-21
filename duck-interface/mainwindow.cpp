@@ -81,15 +81,7 @@ void MainWindow::on_btn_generate_map_clicked()
     setMapParameters();
     random_map(&map);
 
-    MapWidget *m = new MapWidget(&map, NULL, this);
-    QDialog q;
-    QVBoxLayout *l = new QVBoxLayout;
-
-    l->addWidget(m);
-    q.setLayout(l);
-    q.adjustSize();
-
-    q.exec();
+    showMapDialog(map, this);
 }
 
 void MainWindow::on_btn_init_cluster_clicked()
@@ -156,7 +148,6 @@ void MainWindow::on_btn_refresh_clicked()
 
     stat = callrpc(contact.hostname, PROGNUM, contact.id, PROC_GET_MAP,
             (xdrproc_t)xdr_void, NULL, (xdrproc_t)xdr_map_t, (char *)&map);
-    clnt_perrno((enum clnt_stat)stat);
 
     QString text;
     migrants_t migr;
@@ -175,23 +166,16 @@ void MainWindow::on_btn_refresh_clicked()
         this->bests[list.size] = migr.pop[0];
         text = QString(contact.hostname).append(" \t%0").arg(contact.id).append(" \t%0").arg(migr.pop[0].fitness);
         ui->listWidget->addItem(text);
+
+        ui->listWidget->setEnabled(true);
     } else {
         ui->listWidget->addItem("Il n'y a aucun cluster lancé pour ce couple (adresse+identifiant)...");
+        ui->listWidget->setEnabled(false);
     }
 }
 
-void MainWindow::on_btn_display_path_clicked()
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     int idx = ui->listWidget->currentRow();
-
-    MapWidget *m = new MapWidget(&map, &(bests[idx]), this);
-
-    QDialog q;
-    QVBoxLayout *l = new QVBoxLayout;
-
-    l->addWidget(m);
-    q.setLayout(l);
-    q.adjustSize();
-
-    q.exec();
+    showPathDialog(map, bests[idx], this);
 }

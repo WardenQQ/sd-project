@@ -23,14 +23,13 @@ genotype_t genetic_algorithm(map_t *map, population_t *pop, server_address_t add
         for (j = 0; j < map->nb_children; j++) {
             tournament_select(&parent1, &parent2, pop, 3);
             crossover(&child, &parent1, &parent2);
-            mutate(&child, map->mutation_prob);
+            mutate(&child, map->mutation_prob, map->min_step, map->max_step);
             evaluate(&child, map);
             add_to_population(pop, &child);
         }
 
         if (i % map->migration_freq == 0) {
             immigrate(pop, addr);
-            fprintf(stderr, "%g \n", pop->genotypes[0].fitness);
         }
 
         reduce_population(pop);
@@ -44,7 +43,7 @@ void init_population(population_t *out, map_t *map)
 
     out->size = REDUCED_POPULATION_SIZE;
     for (i = 0; i < REDUCED_POPULATION_SIZE; i++) {
-        random_genotype(&(out->genotypes[i]));
+        random_genotype(&(out->genotypes[i]), map->min_step, map->max_step);
         evaluate(&(out->genotypes[i]), map);
     }
 

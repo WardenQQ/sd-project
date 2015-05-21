@@ -4,9 +4,6 @@
 extern "C" {
 #endif
 
-#define MIN_STEP 1
-#define MAX_STEP 64
-
 
 enum {
     NORTH = 0,
@@ -24,7 +21,7 @@ typedef struct {
     int direction;
 } gene_t;
 
-gene_t random_gene();
+gene_t random_gene(int min_step, int max_step);
 
 #ifdef __cplusplus
 }

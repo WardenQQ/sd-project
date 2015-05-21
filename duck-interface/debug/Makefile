@@ -836,12 +836,30 @@ moc_mainwindow.cpp: /home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/QtGui \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QListWidgetItem \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qframe.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyleoption.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyle.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabbar.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qrubberband.h \
+		../mapwidget.h \
 		../../map.h \
 		../../genotype.h \
 		../../gene.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
 		../../population.h \
-		../../server.h \
 		../../procedures.h \
+		../../server.h \
 		../../types_xdr.h \
 		../../client.h \
 		../mainwindow.h
@@ -1154,9 +1172,11 @@ moc_mapwidget.cpp: ../../map.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qdesktopservices.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qvalidator.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qtguiversion.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
 		../mapwidget.h
 	/home/abotsi/Qt5.4.1/5.4/gcc/bin/moc $(DEFINES) -I/home/abotsi/Qt5.4.1/5.4/gcc/mkspecs/linux-g++ -I/home/abotsi/Documents/S6/SD/projet/sd-project/duck-interface -I/home/abotsi/Qt5.4.1/5.4/gcc/include -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtNetwork -I/home/abotsi/Qt5.4.1/5.4/gcc/include/QtCore -I. ../mapwidget.h -o moc_mapwidget.cpp
 
@@ -1491,12 +1511,30 @@ main.o: ../main.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QListWidgetItem \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qframe.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyleoption.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyle.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabbar.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qrubberband.h \
+		../mapwidget.h \
 		../../map.h \
 		../../genotype.h \
 		../../gene.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
 		../../population.h \
-		../../server.h \
 		../../procedures.h \
+		../../server.h \
 		../../types_xdr.h \
 		../../client.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QApplication \
@@ -1814,12 +1852,30 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QListWidgetItem \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistwidget.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlistview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemview.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qframe.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyleoption.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractslider.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyle.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabbar.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qrubberband.h \
+		../mapwidget.h \
 		../../map.h \
 		../../genotype.h \
 		../../gene.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
 		../../population.h \
-		../../server.h \
 		../../procedures.h \
+		../../server.h \
 		../../types_xdr.h \
 		../../client.h \
 		ui_mainwindow.h \
@@ -1834,15 +1890,6 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qbuttongroup.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QComboBox \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qcombobox.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemdelegate.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyleoption.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractspinbox.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qslider.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractslider.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qstyle.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtabbar.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qrubberband.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qframe.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QFrame \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QGridLayout \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qgridlayout.h \
@@ -1854,12 +1901,11 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QHBoxLayout \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QHeaderView \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qheaderview.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractitemview.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qabstractscrollarea.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QLabel \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlabel.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QLineEdit \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qlineedit.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QListWidget \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QMenuBar \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qmenubar.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qmenu.h \
@@ -1870,15 +1916,7 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QSpinBox \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qspinbox.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QTabWidget \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QToolBar \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtoolbar.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QToolBox \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qtoolbox.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QVBoxLayout \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
-		../mapwidget.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtNetwork/QHostAddress \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtNetwork/qhostaddress.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtNetwork/qabstractsocket.h \
@@ -2214,9 +2252,11 @@ mapwidget.o: ../mapwidget.cpp ../mapwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qdesktopservices.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qvalidator.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtGui/qtguiversion.h \
-		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QDialog \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qdialog.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/qsizepolicy.h \
+		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QWidget \
 		ui_mapwidget.h \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtCore/QVariant \
 		/home/abotsi/Qt5.4.1/5.4/gcc/include/QtWidgets/QAction \
@@ -2275,7 +2315,8 @@ client.o: ../../client.c ../../client.h \
 		../../map.h \
 		../../genotype.h \
 		../../gene.h \
-		../../types_xdr.h
+		../../types_xdr.h \
+		../../population.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o client.o ../../client.c
 
 moc_mainwindow.o: moc_mainwindow.cpp 

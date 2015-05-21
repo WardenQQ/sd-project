@@ -17,7 +17,6 @@ void random_map(map_t *out)
     int goals = out->nb_goals;
     out->nb_blocks = 0;
     out->nb_goals = 0;
-    fprintf(stderr, "hey");
     for (i = 0; i < blocks; i++) {
         do {
             out->blocks[i].radius = rand() % (out->max_radius - out->min_radius + 1) + out->min_radius;
@@ -27,7 +26,6 @@ void random_map(map_t *out)
         (out->nb_blocks)++;
     }
 
-        fprintf(stderr, "hey");
     for (i = 0; i < goals; i++) {
         do {
             out->goals[i].radius = rand() % (out->max_radius - out->min_radius + 1) + out->min_radius;
@@ -37,7 +35,6 @@ void random_map(map_t *out)
         (out->nb_goals)++;
     }
 
-        fprintf(stderr, "hey");
     do {
         out->start_pos.radius = out->min_radius;
         out->start_pos.x = out->start_pos.radius + rand() % (out->width - 2 * out->start_pos.radius);
@@ -107,7 +104,7 @@ int evaluate_gene(gene_t g, map_object_t *pos, map_t *map, unsigned long *reache
         /* then over objectives. */
         for (j = 0;j < map->nb_goals; j++) {
             if (!((*reached_goals >> j) & 1) && collides_with(new_pos, map->goals[j])) {
-                fitness += (MAX_RADIUS - new_pos.radius) / (MAX_RADIUS - MIN_RADIUS);
+                fitness += (map->max_radius - new_pos.radius) / (map->max_radius - map->min_radius);
                 *reached_goals |= 1 << j;
             }
         }
@@ -134,9 +131,9 @@ void evaluate(genotype_t *genotype, map_t *map)
         for (i = 0; i < GENOTYPE_SIZE; i++) {
             sum += genotype->genes[i].step;
         }
-        genotype->fitness += (GENOTYPE_SIZE * MAX_STEP - sum) / (GENOTYPE_SIZE * MAX_STEP - GENOTYPE_SIZE * MIN_STEP);
+        genotype->fitness += (GENOTYPE_SIZE * map->max_step - sum) / (GENOTYPE_SIZE * map->max_step - GENOTYPE_SIZE * map->min_step);
     } else {
-        double maxdist = LENGTH * LENGTH + HEIGHT * HEIGHT;
+        double maxdist = map->width * map->width + map->height * map->height;
         double mindist = maxdist;
 
         for (i = 0; i < map->nb_goals; i++) {

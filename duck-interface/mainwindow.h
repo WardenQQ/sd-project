@@ -4,6 +4,7 @@
 #include <QtGui>
 #include <QMainWindow>
 #include <string.h>
+#include <QListWidgetItem>
 #include "mapwidget.h"
 #include "../map.h"
 #include "../genotype.h"
@@ -33,7 +34,7 @@ private slots:
 
     void on_btn_refresh_clicked();
 
-    void on_btn_display_path_clicked();
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

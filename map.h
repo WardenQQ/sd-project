@@ -6,18 +6,8 @@
 extern "C" {
 #endif
 
-#define HEIGHT 600
-#define LENGTH 600
-#define MAX_BLOCKS_NBR 10
-#define MAX_GOALS_NBR 10
-#define MAX_RADIUS 100
-#define MIN_RADIUS 15
-
-typedef enum {
-    NONE,
-    BLOCK,
-    GOAL
-} object_type;
+#define MAX_BLOCKS_NBR 16
+#define MAX_GOALS_NBR 16
 
 typedef struct {
     int x;

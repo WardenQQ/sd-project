@@ -6,3 +6,5 @@ server
 client
 
 *.pro.user*
+
+duck-interface/debug/*
