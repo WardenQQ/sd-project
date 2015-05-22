@@ -305,6 +305,7 @@ public:
 
         label_10 = new QLabel(groupBox_3);
         label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setWordWrap(true);
 
         gridLayout_4->addWidget(label_10, 1, 0, 1, 1);
 
@@ -539,7 +540,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -549,22 +550,30 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "I Wanna be a duck...", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Dimensions de la carte", 0));
-        sb_width->setSuffix(QApplication::translate("MainWindow", "px", 0));
-        sb_height->setSuffix(QApplication::translate("MainWindow", "px", 0));
+        sb_width->setSuffix(QApplication::translate("MainWindow", " px", 0));
+        sb_stepMax->setSuffix(QApplication::translate("MainWindow", " px", 0));
+        sb_height->setSuffix(QApplication::translate("MainWindow", " px", 0));
+        sb_stepMin->setSuffix(QApplication::translate("MainWindow", " px", 0));
         label_3->setText(QApplication::translate("MainWindow", "Largeur", 0));
         label_4->setText(QApplication::translate("MainWindow", "Hauteur", 0));
         label_12->setText(QApplication::translate("MainWindow", "Taille de pas max", 0));
         label_11->setText(QApplication::translate("MainWindow", "Taille de pas min", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Obstacles et objectifs", 0));
         label_5->setText(QApplication::translate("MainWindow", "Nombre d'obstacles", 0));
+        sb_radius_max->setSuffix(QApplication::translate("MainWindow", " px", 0));
         label_7->setText(QApplication::translate("MainWindow", "Taille d'objet max", 0));
         label_6->setText(QApplication::translate("MainWindow", "Nombre d'objectifs", 0));
         label_8->setText(QApplication::translate("MainWindow", "Taille d'objet min", 0));
+        sb_radius_min->setSuffix(QApplication::translate("MainWindow", " px", 0));
         btn_generate_map->setText(QApplication::translate("MainWindow", "G\303\251n\303\251rer une carte al\303\251atoire", 0));
         groupBox_3->setTitle(QApplication::translate("MainWindow", "Algorithme g\303\251netique", 0));
         label_9->setText(QApplication::translate("MainWindow", "Probabilit\303\251 de mutation", 0));
         label_13->setText(QApplication::translate("MainWindow", "Fr\303\251quence de migration", 0));
-        label_10->setText(QApplication::translate("MainWindow", "Nombre d'enfants par g\303\251n\303\251ration", 0));
+        label_10->setText(QApplication::translate("MainWindow", "Proportion d'enfants dans une nouvelle g\303\251n\303\251ration", 0));
+        sb_children->setSuffix(QApplication::translate("MainWindow", " enfants /100 individus", 0));
+        sb_migration->setSuffix(QApplication::translate("MainWindow", " g\303\251n\303\251rations", 0));
+        sb_migration->setPrefix(QApplication::translate("MainWindow", "toutes les ", 0));
+        sb_mutation->setSuffix(QApplication::translate("MainWindow", " %", 0));
         groupBox_6->setTitle(QApplication::translate("MainWindow", "Nouveau n\305\223ud", 0));
         label_17->setText(QApplication::translate("MainWindow", "Adresse IP", 0));
         label_15->setText(QApplication::translate("MainWindow", "Identifiant", 0));

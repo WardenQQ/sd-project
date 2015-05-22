@@ -147,11 +147,13 @@ void evaluate(genotype_t *genotype, map_t *map)
     int dist = 0,
         maxdist = GENOTYPE_SIZE * map->max_step;
     genotype->fitness = 0;
+
     for (i = 0; i < GENOTYPE_SIZE; i++) {
         for (j =0; j < genotype->genes[i].step; j++) {
-            dist++;
             new_pos = step_once(pos, genotype->genes[i].direction);
             collision = look(map, reached_goals, pos);
+            // si la direction est diagonale, le pas compte plus
+            dist += 1 + (genotype->genes[i].direction % 2)*(1-(1/sqrt(2)));
             if (!(collision.block)) {
                 pos = new_pos;
                 if (collision.nb_goals) {

@@ -7,15 +7,16 @@ MapWidget::MapWidget(map_t &map, QWidget *parent) :
 {
     ui->setupUi(this);
     this->map = map;
+    this->pos = map.start_pos;
+    //this->path = NULL;
+    this->has_path = false;
 
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 
     this->idx_in_gene = 0;
     this->idx_in_genotype = 0;
-    pos = map.start_pos;
-
-    this->has_path = false;
+    this->reached_goals = 0;
 
     this->setMinimumWidth(map.width);
     this->setMinimumHeight(map.height);
@@ -142,7 +143,7 @@ void MapWidget::updatePosition()
     if (idx_in_genotype < GENOTYPE_SIZE && reached_goals != pow(2, map.nb_goals) - 1) {
         if (idx_in_gene < path.genes[idx_in_genotype].step) {
             map_object_t new_pos = step_once(pos, path.genes[idx_in_genotype].direction);
-            collision_info_t col = look(&map, reached_goals, pos);
+            collision_info_t col = look(&map, reached_goals, new_pos);
 
             if (!col.block) {
                 pos = new_pos;
